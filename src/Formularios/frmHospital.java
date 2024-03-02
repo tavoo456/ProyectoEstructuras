@@ -325,34 +325,34 @@ public class frmHospital extends javax.swing.JFrame {
 
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
         // TODO add your handling code here:
-        this.listadoDoctores.add(new Doctor("2015-DS-566", "Pedro Alejandro Duarte Suarez", "Cirujano"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2018-Ru-1003", "Rubén Ernesto García Sánchez", "Diabetes Tipo 2", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2023-QA-4890", "Quetzalli Anabel Rodríguez Aquino", "Dolor de Espalda", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2016-AO-6478", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2017-JM-2359", "Juan Manuel Martínez Juárez", "Fiebre", "Leve"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2018-PV-7612", "Pedro Valdez Pérez Villanueva", "Ansiedad", "Moderado"));
+        this.listadoDoctores.add(new Doctor("1", "Pedro Alejandro Duarte Suarez", "Cirujano"));
+        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("1", "Rubén Ernesto García Sánchez", "Diabetes Tipo 2", "Moderado"));
+        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2", "Quetzalli Anabel Rodríguez Aquino", "Dolor de Espalda", "Moderado"));
+        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("3", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
+        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("4", "Juan Manuel Martínez Juárez", "Fiebre", "Leve"));
+        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("5", "Pedro Valdez Pérez Villanueva", "Ansiedad", "Moderado"));
                 
-        this.listadoDoctores.add(new Doctor("2017-GT-8943", "Raul Gustavo Téllez Galindo", "Pediatra"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2016-AO-6478", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2022-VB-2351", "Víctor Benito Vega Barrientos", "Gripe", "Moderado"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2019-EV-7810", "Elena Victoria Esquivel Villanueva", "Fiebre", "Leve"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2020-PB-1845", "Patricia Belén Pacheco Bravo", "Bronquitis", "Moderado"));         
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2015-GH-3204", "Gloria Hilda Gutiérrez Hernández", "Insomnio", "Leve"));
+        this.listadoDoctores.add(new Doctor("2", "Raul Gustavo Téllez Galindo", "Pediatra"));
+        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("1", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
+        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2", "Víctor Benito Vega Barrientos", "Gripe", "Moderado"));
+        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("3", "Elena Victoria Esquivel Villanueva", "Fiebre", "Leve"));
+        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("4", "Patricia Belén Pacheco Bravo", "Bronquitis", "Moderado"));         
+        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("5", "Gloria Hilda Gutiérrez Hernández", "Insomnio", "Leve"));
         
-        this.listadoDoctores.add(new Doctor("2022-MG-1102", "Miguel Ángel González Mendoza", "Gastroenterólogo"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2018-JC-4529", "José Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2016-AR-5987", "Ana Rosa Álvarez Ramos", "Indigestión", "Leve"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2024-OC-3094", "Omar Cruz Ortiz", "Úlcera Péptica", "Grave"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2017-LR-7012", "Luis Ricardo León Ramírez", "Dolor Abdominal", "Leve"));
+        this.listadoDoctores.add(new Doctor("3", "Miguel Ángel González Mendoza", "Gastroenterólogo"));
+        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("1", "José Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
+        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2", "Ana Rosa Álvarez Ramos", "Indigestión", "Leve"));
+        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("3", "Omar Cruz Ortiz", "Úlcera Péptica", "Grave"));
+        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("4", "Luis Ricardo León Ramírez", "Dolor Abdominal", "Leve"));
         
-        this.listadoDoctores.add(new Doctor("2015-RP-6713", "Ricardo Pablo Rodríguez Pacheco", "Neurólogo"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2019-AP-5432", "Ana Paula Álvarez Pérez", "Migraña", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2021-EC-8765", "Eduardo Carlos Escobedo Castillo", "Epilepsia", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2018-JR-2345", "Juan Ramón Juárez Ramírez", "Parkinson", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2020-OM-9087", "Oscar Manuel Ortiz Medina", "Esclerosis Múltiple", "Moderado"));
+        this.listadoDoctores.add(new Doctor("4", "Ricardo Pablo Rodríguez Pacheco", "Neurólogo"));
+        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("1", "Ana Paula Álvarez Pérez", "Migraña", "Moderado"));
+        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2", "Eduardo Carlos Escobedo Castillo", "Epilepsia", "Moderado"));
+        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("3", "Juan Ramón Juárez Ramírez", "Parkinson", "Moderado"));
+        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("4", "Oscar Manuel Ortiz Medina", "Esclerosis Múltiple", "Moderado"));
         
-        this.listadoDoctores.add(new Doctor("2015-DS-564", "Pedro Alejandro Duarte Suarez", "Gastroenterólogo"));        
-        this.listadoDoctores.get(4).SetListaPacientes(new Paciente("2016-JC-4544", "Juan Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
+        this.listadoDoctores.add(new Doctor("5", "Pedro Alejandro Duarte Suarez", "Gastroenterólogo"));        
+        this.listadoDoctores.get(4).SetListaPacientes(new Paciente("1", "Juan Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
         
         for(int i=0; i<this.listadoDoctores.size(); i++)
         {
