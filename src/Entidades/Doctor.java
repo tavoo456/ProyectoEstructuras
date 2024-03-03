@@ -9,10 +9,10 @@ import java.util.ArrayList;
  * @author Jimmy
  */
 public class Doctor {
-    private String ID;
-    private String nombre;
-    private String especialidad;
-    private ArrayList<Paciente> listaPacientes;
+    public String ID;
+    public String nombre;
+    public String especialidad;
+    public ArrayList<Paciente> listaPacientes;
     
     //Contructor vacío
     public Doctor(){
@@ -25,38 +25,5 @@ public class Doctor {
         this.especialidad = especialidad;
         listaPacientes = new ArrayList<>();
     }
-    
-    //Getter y setters    
-    public String GetID(){
-        return ID;
-    }
-    
-    public void SetID(String ID){
-        this.ID = ID;
-    }
-    
-    public String GetNombre(){
-        return nombre;
-    }
-    
-    public void SetNombre(String nombre){
-        this.nombre = nombre;
-    }
 
-    public String GetEspecialidad() {
-        return especialidad;
-    }
-    
-    public void SetEspecialidad(String especialidad) {
-        this.especialidad = especialidad;
-    }
-
-    public ArrayList<Paciente> GetListaPacientes() {
-        return listaPacientes;
-    }
-
-    public void SetListaPacientes(Paciente paciente) {
-        this.listaPacientes.add(paciente);
-    }
-      
 }

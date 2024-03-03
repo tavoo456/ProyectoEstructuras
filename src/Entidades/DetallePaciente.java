@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * @author Jimmy
  */
 public class DetallePaciente {
-    private ArrayList<Doctor> listaDoctores;
-    private ArrayList<String> listaDetallesGlobal;
+    public ArrayList<Doctor> listaDoctores;
+    public ArrayList<String> listaDetallesGlobal;
     
     public DetallePaciente(){
         listaDoctores = new ArrayList<>();
@@ -28,7 +28,7 @@ public class DetallePaciente {
         int indiceDoctor = listaDoctores.size();
         
         for(int i = 0; i< indiceDoctor; i++){
-            for(int j = 0; j<listaDoctores.get(i).GetListaPacientes().size(); j++){
+            for(int j = 0; j<listaDoctores.get(i).listaPacientes.size(); j++){
                 
             }
         }

@@ -34,7 +34,6 @@ public class frmHospital extends javax.swing.JFrame {
         modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel(); 
         
         this.btnBuscarDoctor.setEnabled(false);
-        this.btnBuscarPaciente.setEnabled(false);
         this.btnTotalizar.setEnabled(false);
         this.btnRecargar.setEnabled(false);
         
@@ -52,13 +51,10 @@ public class frmHospital extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnBuscarPaciente = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnTotalizar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         btnBuscarDoctor = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txtBuscarPaciente = new javax.swing.JTextField();
         txtBuscarDoctor = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -72,18 +68,17 @@ public class frmHospital extends javax.swing.JFrame {
         btnCargarDatos = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         btnRecargar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnExportarHTML = new javax.swing.JButton();
+        btnExportarCSV = new javax.swing.JButton();
+        btnExportarJSON = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtCantidadPacientes = new javax.swing.JTextField();
+        txtCantidadDoctores = new javax.swing.JTextField();
+        btnImportarJSON = new javax.swing.JButton();
+        btnAdministrarDatos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnBuscarPaciente.setText("Buscar");
-        btnBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarPacienteActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("Totalizar por estado del paciente:");
 
@@ -94,8 +89,6 @@ public class frmHospital extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Buscar Paciente:");
-
         btnBuscarDoctor.setText("Buscar");
         btnBuscarDoctor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -103,7 +96,7 @@ public class frmHospital extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Buscar Doctor:");
+        jLabel6.setText("Buscar Doctor por ID:");
 
         jLabel1.setText("Doctores:");
 
@@ -170,24 +163,42 @@ public class frmHospital extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setLabel("Exportar HTML");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnExportarHTML.setLabel("Exportar HTML");
+        btnExportarHTML.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnExportarHTMLActionPerformed(evt);
             }
         });
 
-        jButton2.setLabel("Exportar CSV");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnExportarCSV.setLabel("Exportar CSV");
+        btnExportarCSV.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnExportarCSVActionPerformed(evt);
             }
         });
 
-        jButton3.setLabel("Exportar JSON");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnExportarJSON.setLabel("Exportar JSON");
+        btnExportarJSON.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnExportarJSONActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Cantidad doctores:");
+
+        jLabel8.setText("Cantidad pacientes:");
+
+        btnImportarJSON.setText("Importar JSON");
+        btnImportarJSON.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImportarJSONActionPerformed(evt);
+            }
+        });
+
+        btnAdministrarDatos.setText("Administrar datos");
+        btnAdministrarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdministrarDatosActionPerformed(evt);
             }
         });
 
@@ -196,57 +207,70 @@ public class frmHospital extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnBuscarDoctor))
-                                .addComponent(jLabel6)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnBuscarPaciente)))
-                            .addGap(22, 22, 22))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnTotalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(lblNumPacientes))
-                            .addGap(18, 18, 18)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(36, 36, 36)
+                        .addComponent(btnAdministrarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblNumPacientes)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel8)
+                                            .addComponent(jLabel5))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtCantidadPacientes)
+                                            .addComponent(txtCantidadDoctores)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnBuscarDoctor))
+                                            .addComponent(jLabel6)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnTotalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(jLabel4)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel7)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(btnRecargar)))
+                                        .addGap(0, 37, Short.MAX_VALUE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(53, 53, 53)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCargarDatos))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnRecargar))
-                            .addComponent(jButton1)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2))
+                                .addComponent(btnCargarDatos)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnExportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(btnExportarCSV, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnExportarHTML, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnImportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(347, 633, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 630, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 660, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -257,50 +281,61 @@ public class frmHospital extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(61, 61, 61)
+                                .addComponent(lblNumPacientes))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtCantidadDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(txtCantidadPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(btnCargarDatos))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscarDoctor)
+                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnTotalizar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNumPacientes)
-                        .addGap(93, 93, 93)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBuscarDoctor)
-                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarPaciente))
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(btnCargarDatos))
-                        .addGap(18, 18, 18)
+                        .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(btnRecargar))
+                        .addGap(27, 27, 27)
+                        .addComponent(btnExportarHTML)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnExportarJSON)
+                            .addComponent(btnImportarJSON))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(btnExportarCSV)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAdministrarDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))))
         );
 
-        jButton1.getAccessibleContext().setAccessibleName("");
+        btnExportarHTML.getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -309,42 +344,20 @@ public class frmHospital extends javax.swing.JFrame {
         //TODO add your handling code here:
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
-        this.btnBuscarPaciente.setEnabled(false);
         
         String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
         
         for (int i = 0; i < this.listadoDoctores.size(); i++){
-            if(busquedaDoctor.equals(listadoDoctores.get(i).GetNombre().toUpperCase())){
+            if(busquedaDoctor.equals(listadoDoctores.get(i).ID.toUpperCase())){
                 String[] registroDoctores = {
-                    this.listadoDoctores.get(i).GetID(), 
-                    this.listadoDoctores.get(i).GetNombre(), 
-                    this.listadoDoctores.get(i).GetEspecialidad()
+                    this.listadoDoctores.get(i).ID, 
+                    this.listadoDoctores.get(i).nombre, 
+                    this.listadoDoctores.get(i).especialidad
                 };
                 modeloDoctor.addRow(registroDoctores);
             }            
         }
-        btnBuscarPaciente.setEnabled(false);
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
-
-    private void btnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPacienteActionPerformed
-        // TODO add your handling code here:
-        int indiceListaDoctor = this.jtDoctor.getSelectedRow();
-        this.modeloPaciente.getDataVector().removeAllElements();
-        
-        String busquedaPaciente = this.txtBuscarPaciente.getText().toUpperCase();
-        
-        for(int i = 0; i < listadoDoctores.get(indiceListaDoctor).GetListaPacientes().size(); i++){
-            if(busquedaPaciente.equals(listadoDoctores.get(indiceListaDoctor).GetListaPacientes().get(i).GetNombre().toUpperCase())){
-                String[] registroPacientes = {
-                    this.listadoDoctores.get(indiceListaDoctor).GetListaPacientes().get(i).GetID(),
-                    this.listadoDoctores.get(indiceListaDoctor).GetListaPacientes().get(i).GetNombre(),
-                    this.listadoDoctores.get(indiceListaDoctor).GetListaPacientes().get(i).GetPadecimiento(),
-                    this.listadoDoctores.get(indiceListaDoctor).GetListaPacientes().get(i).GetPadecimiento()
-                }; 
-                modeloPaciente.addRow(registroPacientes);
-            }            
-        }
-    }//GEN-LAST:event_btnBuscarPacienteActionPerformed
 
     private void btnTotalizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTotalizarActionPerformed
         // TODO add your handling code here:
@@ -352,8 +365,8 @@ public class frmHospital extends javax.swing.JFrame {
         String opcionSeleccionada = this.cbEstado.getSelectedItem().toString();
         
         for(int i = 0; i < this.listadoDoctores.size(); i++){
-            for(int j = 0; j < this.listadoDoctores.get(i).GetListaPacientes().size(); j++){
-                if(opcionSeleccionada.equals(this.listadoDoctores.get(i).GetListaPacientes().get(j).GetEstado())){
+            for(int j = 0; j < this.listadoDoctores.get(i).listaPacientes.size(); j++){
+                if(opcionSeleccionada.equals(this.listadoDoctores.get(i).listaPacientes.get(j).estado)){
                     contadorPacientes++;
                 }
             }
@@ -364,68 +377,24 @@ public class frmHospital extends javax.swing.JFrame {
 
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
         // TODO add your handling code here:
-        this.listadoDoctores.add(new Doctor("1", "Pedro Alejandro Duarte Suarez", "Cirujano"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("1", "Rubén Ernesto García Sánchez", "Diabetes Tipo 2", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("2", "Quetzalli Anabel Rodríguez Aquino", "Dolor de Espalda", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("3", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("4", "Juan Manuel Martínez Juárez", "Fiebre", "Leve"));
-        this.listadoDoctores.get(0).SetListaPacientes(new Paciente("5", "Pedro Valdez Pérez Villanueva", "Ansiedad", "Moderado"));
-                
-        this.listadoDoctores.add(new Doctor("2", "Raul Gustavo Téllez Galindo", "Pediatra"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("1", "Ana Olivia Orozco Olivares", "Dolor de Oídos", "Moderado"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("2", "Víctor Benito Vega Barrientos", "Gripe", "Moderado"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("3", "Elena Victoria Esquivel Villanueva", "Fiebre", "Leve"));
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("4", "Patricia Belén Pacheco Bravo", "Bronquitis", "Moderado"));         
-        this.listadoDoctores.get(1).SetListaPacientes(new Paciente("5", "Gloria Hilda Gutiérrez Hernández", "Insomnio", "Leve"));
         
-        this.listadoDoctores.add(new Doctor("3", "Miguel Ángel González Mendoza", "Gastroenterólogo"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("1", "José Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("2", "Ana Rosa Álvarez Ramos", "Indigestión", "Leve"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("3", "Omar Cruz Ortiz", "Úlcera Péptica", "Grave"));
-        this.listadoDoctores.get(2).SetListaPacientes(new Paciente("4", "Luis Ricardo León Ramírez", "Dolor Abdominal", "Leve"));
-        
-        this.listadoDoctores.add(new Doctor("4", "Ricardo Pablo Rodríguez Pacheco", "Neurólogo"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("1", "Ana Paula Álvarez Pérez", "Migraña", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("2", "Eduardo Carlos Escobedo Castillo", "Epilepsia", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("3", "Juan Ramón Juárez Ramírez", "Parkinson", "Moderado"));
-        this.listadoDoctores.get(3).SetListaPacientes(new Paciente("4", "Oscar Manuel Ortiz Medina", "Esclerosis Múltiple", "Moderado"));
-        
-        this.listadoDoctores.add(new Doctor("5", "Pedro Alejandro Duarte Suarez", "Gastroenterólogo"));        
-        this.listadoDoctores.get(4).SetListaPacientes(new Paciente("1", "Juan Carlos Juárez Cordero", "Acidez Estomacal", "Moderado"));
-        
-        for(int i=0; i<this.listadoDoctores.size(); i++)
-        {
-            String[] registroDoctores = {
-                this.listadoDoctores.get(i).GetID(), 
-                this.listadoDoctores.get(i).GetNombre(), 
-                this.listadoDoctores.get(i).GetEspecialidad()
-            };
-            modeloDoctor.addRow(registroDoctores);
-        }       
-        
-        this.btnCargarDatos.setEnabled(false);
-        this.btnBuscarDoctor.setEnabled(true);
-        this.btnTotalizar.setEnabled(true);
-        this.btnRecargar.setEnabled(true);
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void jtDoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDoctorMouseClicked
         // TODO add your handling code here:
         int indiceDoctor = this.jtDoctor.getSelectedRow();
-        int cantidadPacientes = this.listadoDoctores.get(indiceDoctor).GetListaPacientes().size();
+        int cantidadPacientes = this.listadoDoctores.get(indiceDoctor).listaPacientes.size();
         modeloPaciente.getDataVector().removeAllElements();
         
         for(int i = 0; i<cantidadPacientes; i++){
             String [] registroPacientes = {
-                this.listadoDoctores.get(indiceDoctor).GetListaPacientes().get(i).GetID(), 
-                this.listadoDoctores.get(indiceDoctor).GetListaPacientes().get(i).GetNombre(),            
-                this.listadoDoctores.get(indiceDoctor).GetListaPacientes().get(i).GetPadecimiento(), 
-                this.listadoDoctores.get(indiceDoctor).GetListaPacientes().get(i).GetEstado()
+                this.listadoDoctores.get(indiceDoctor).listaPacientes.get(i).ID, 
+                this.listadoDoctores.get(indiceDoctor).listaPacientes.get(i).nombre,            
+                this.listadoDoctores.get(indiceDoctor).listaPacientes.get(i).padecimiento, 
+                this.listadoDoctores.get(indiceDoctor).listaPacientes.get(i).estado
             };
             modeloPaciente.addRow(registroPacientes);
         }
-        
-        btnBuscarPaciente.setEnabled(true);
     }//GEN-LAST:event_jtDoctorMouseClicked
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
@@ -436,20 +405,18 @@ public class frmHospital extends javax.swing.JFrame {
         for(int i=0; i<this.listadoDoctores.size(); i++)
         {
             String[] registroDoctores = {
-                this.listadoDoctores.get(i).GetID(), 
-                this.listadoDoctores.get(i).GetNombre(), 
-                this.listadoDoctores.get(i).GetEspecialidad()
+                this.listadoDoctores.get(i).ID, 
+                this.listadoDoctores.get(i).nombre, 
+                this.listadoDoctores.get(i).especialidad
             };
             modeloDoctor.addRow(registroDoctores);
         }
         
-        btnBuscarPaciente.setEnabled(false);
         txtBuscarDoctor.setText("");
-        txtBuscarPaciente.setText("");
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     //Exportar HTML
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnExportarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarHTMLActionPerformed
         // TODO add your handling code here:
         PrintWriter pw = null;
         JFileChooser fileChooser = new JFileChooser();
@@ -461,17 +428,27 @@ public class frmHospital extends javax.swing.JFrame {
             selectedFile = fileChooser.getSelectedFile();
             System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath());
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnExportarHTMLActionPerformed
 
     //Exportar JSON
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnExportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarJSONActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnExportarJSONActionPerformed
   
     //Exportar CSV
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnExportarCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarCSVActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnExportarCSVActionPerformed
+
+    private void btnImportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarJSONActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImportarJSONActionPerformed
+
+    private void btnAdministrarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarDatosActionPerformed
+        // TODO add your handling code here:
+        frmAdministrar formAdministrar = new frmAdministrar();
+        formAdministrar.setVisible(true);
+    }//GEN-LAST:event_btnAdministrarDatosActionPerformed
 
     
     /**
@@ -510,15 +487,16 @@ public class frmHospital extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdministrarDatos;
     private javax.swing.JButton btnBuscarDoctor;
-    private javax.swing.JButton btnBuscarPaciente;
     private javax.swing.JButton btnCargarDatos;
+    private javax.swing.JButton btnExportarCSV;
+    private javax.swing.JButton btnExportarHTML;
+    private javax.swing.JButton btnExportarJSON;
+    private javax.swing.JButton btnImportarJSON;
     private javax.swing.JButton btnRecargar;
     private javax.swing.JButton btnTotalizar;
     private javax.swing.JComboBox<String> cbEstado;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -526,12 +504,14 @@ public class frmHospital extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jtDoctor;
     private javax.swing.JTable jtPaciente;
     private javax.swing.JLabel lblNumPacientes;
     private javax.swing.JTextField txtBuscarDoctor;
-    private javax.swing.JTextField txtBuscarPaciente;
+    private javax.swing.JTextField txtCantidadDoctores;
+    private javax.swing.JTextField txtCantidadPacientes;
     // End of variables declaration//GEN-END:variables
 }
