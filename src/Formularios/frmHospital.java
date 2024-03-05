@@ -20,6 +20,8 @@ public class frmHospital extends javax.swing.JFrame {
     /**
      * Creates new form frmHospital
      */
+    
+    BancoDeDatos datos = new BancoDeDatos();
             
     ArrayList<Doctor> listadoDoctores;
     DefaultTableModel modeloDoctor;
@@ -308,11 +310,11 @@ public class frmHospital extends javax.swing.JFrame {
             if(busquedaDoctor.equals(listadoDoctores.get(i).ID.toUpperCase())){
                 String[] registroDoctores = {
                     this.listadoDoctores.get(i).ID, 
-                    this.listadoDoctores.get(i).nombre, 
-                    this.listadoDoctores.get(i).especialidad
+                   this.listadoDoctores.get(i).nombre, 
+                   this.listadoDoctores.get(i).especialidad
                 };
                 modeloDoctor.addRow(registroDoctores);
-            }            
+           }            
         }
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
 
@@ -336,6 +338,17 @@ public class frmHospital extends javax.swing.JFrame {
         // TODO add your handling code here:
         int cantidadDoctores = Integer.parseInt(txtCantidadDoctores.getText());
         int cantidadPacientes = Integer.parseInt(txtCantidadPacientes.getText());
+        
+        for(int i=0; i<cantidadDoctores; i++)
+        {
+            this.listadoDoctores.add(new Doctor(Integer.toString(i),datos.Seleccionar(0),datos.Seleccionar(2)));
+            for(int j=0; j<cantidadPacientes; j++)
+            {
+                this.listadoDoctores.get(i).listaPacientes.add(
+                        new Paciente(Integer.toString(j),datos.Seleccionar(0),datos.Seleccionar(1),datos.Seleccionar(3)));
+            }
+        }
+        this.btnRecargar.setEnabled(true);
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void jtDoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDoctorMouseClicked

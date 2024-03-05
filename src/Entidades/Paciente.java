@@ -15,10 +15,10 @@ public class Paciente {
     public String estado;
     //public  fechaIngreso;
 
-    public Paciente(){
-        ID = "";
-        nombre = "";
-        padecimiento = "";
-        estado = "";
+    public Paciente(String ID, String nombre, String padecimiento, String estado){
+        this.ID = ID;
+        this.nombre = nombre;
+        this.padecimiento = padecimiento;
+        this.estado = estado;
     }
 }

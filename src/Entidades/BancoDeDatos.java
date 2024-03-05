@@ -14,14 +14,15 @@ public class BancoDeDatos {
     
     public ArrayList<String> listaNombres;    
     public ArrayList<String> listaPadecimientos;    
-    public ArrayList<String> listaEspecialidades;   
+    public ArrayList<String> listaEspecialidades;  
+    public ArrayList<String> listaEstado;
     
     public BancoDeDatos(){
         listaNombres = new ArrayList<>();
         listaPadecimientos = new ArrayList<>();
         listaEspecialidades = new ArrayList<>();  
-        
-        
+        listaEstado = new ArrayList();
+           
         listaNombres.add("");
         listaNombres.add("Juan Carlos Martinez Lopez");
         listaNombres.add("Valentina Fernanda Perez Ramirez");
@@ -74,7 +75,6 @@ public class BancoDeDatos {
         listaNombres.add("Maximiliano Jose Castro Velasco");
         listaNombres.add("Sofia Maria Rodriguez Gomez");
         
-        listaPadecimientos.add("");
         listaPadecimientos.add("Gripe");
         listaPadecimientos.add("Infecciones de la piel");
         listaPadecimientos.add("Dolor de cabeza");
@@ -96,7 +96,6 @@ public class BancoDeDatos {
         listaPadecimientos.add("Picaduras de insectos");
         listaPadecimientos.add("Resfriado común");
         
-        listaEspecialidades.add("");
         listaEspecialidades.add("Medicina Familiar");
         listaEspecialidades.add("Medicina General");
         listaEspecialidades.add("Pediatría");
@@ -107,29 +106,42 @@ public class BancoDeDatos {
         listaEspecialidades.add("Medicina del Deporte");
         listaEspecialidades.add("Gastroenterología");
         listaEspecialidades.add("Medicina Interna");
+        
+        listaEstado.add("Leve");
+        listaEstado.add("Moderado");
+        listaEstado.add("Grave");
+        
     }
     
-    public String SeleccionarNombre(){
+    public String Seleccionar(int n){
         int num;
-        
-        num = (int) Math.round(Math.random()*25);
-        
-        return listaNombres.get(num);
+
+        switch (n){
+            case 0:
+                num = (int)(Math.random()*25);
+                return listaNombres.get(num);
+            case 1:
+                num = (int)(Math.random()*20);
+                return listaPadecimientos.get(num);
+                
+            case 2:
+                num = (int)(Math.random()*10);
+                return listaEspecialidades.get(num);
+                
+            case 3:
+                num = (int)(Math.random()*3);
+                return listaEstado.get(num);
+            default:
+                return null;      
+        }  
     }
+     
+    //public String SeleccionarNombre(){
+    //    int num;
+    //    
+    //    num = (int) Math.round(Math.random()*25);
+    //    
+    //    return listaNombres.get(num);
+    //}
     
-    public String SeleccionarPadecimiento(){
-        int num;
-        
-        num = (int) Math.round(Math.random()*10);
-        
-        return listaPadecimientos.get(num);
-    }
-    
-    public String SeleccionarEspecialidad(){
-        int num;
-        
-        num = (int) Math.round(Math.random()*5);
-        
-        return listaEspecialidades.get(num);
-    }
 }
