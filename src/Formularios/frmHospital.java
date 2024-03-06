@@ -314,7 +314,10 @@ public class frmHospital extends javax.swing.JFrame {
                    this.listadoDoctores.get(i).especialidad
                 };
                 modeloDoctor.addRow(registroDoctores);
-           }            
+           }   
+            else {
+                
+            }
         }
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
 
@@ -331,7 +334,7 @@ public class frmHospital extends javax.swing.JFrame {
             }
         }
         
-        lblNumPacientes.setText("Número de pacientes en estado " + opcionSeleccionada.toLowerCase() + ": " + contadorPacientes);
+        lblNumPacientes.setText("Número de pacientes en estado " + opcionSeleccionada + ": " + contadorPacientes);
     }//GEN-LAST:event_btnTotalizarActionPerformed
 
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
@@ -349,6 +352,9 @@ public class frmHospital extends javax.swing.JFrame {
             }
         }
         this.btnRecargar.setEnabled(true);
+        this.btnBuscarDoctor.setEnabled(true);
+        this.btnTotalizar.setEnabled(true);
+        this.btnCargarDatos.setEnabled(false);
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void jtDoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDoctorMouseClicked
