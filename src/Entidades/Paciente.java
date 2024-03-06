@@ -4,6 +4,10 @@
  */
 package Entidades;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author Jimmy
@@ -13,12 +17,16 @@ public class Paciente {
     public String nombre;
     public String padecimiento;
     public String estado;
-    //public  fechaIngreso;
+    public Date fechaIngreso;
 
-    public Paciente(String ID, String nombre, String padecimiento, String estado){
+    public Paciente(String ID, String nombre, String padecimiento, String estado, String fechaIngreso) throws ParseException{
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.fechaIngreso = new Date();
+        
         this.ID = ID;
         this.nombre = nombre;
         this.padecimiento = padecimiento;
-        this.estado = estado;
+        this.estado = estado;        
+        this.fechaIngreso = formatoFecha.parse(fechaIngreso);
     }
 }

@@ -6,6 +6,7 @@ package Formularios;
 
 import Entidades.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -70,6 +71,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jtPaciente = new javax.swing.JTable();
         btnRecargar = new javax.swing.JButton();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -147,6 +149,8 @@ public class frmAdministrar extends javax.swing.JFrame {
             }
         });
 
+        jLabel13.setText("Recargar tablas:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,7 +205,9 @@ public class frmAdministrar extends javax.swing.JFrame {
                                 .addComponent(btnBuscarDoctor))
                             .addComponent(jLabel6)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnRecargar)))
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -222,12 +228,7 @@ public class frmAdministrar extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel11))
                 .addGap(9, 9, 9)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -243,14 +244,17 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscarDoctor)
-                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(btnRecargar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addGap(2, 2, 2)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRecargar)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -271,10 +275,14 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
                             .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAñadirPaciente)
-                        .addGap(16, 16, 16)))
-                .addContainerGap())
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))))
         );
 
         pack();
@@ -284,19 +292,29 @@ public class frmAdministrar extends javax.swing.JFrame {
         //TODO add your handling code here:
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
-
+        
         String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
-
+        
         for (int i = 0; i < this.listadoDoctores.size(); i++){
             if(busquedaDoctor.equals(listadoDoctores.get(i).ID.toUpperCase())){
                 String[] registroDoctores = {
-                    this.listadoDoctores.get(i).ID,
-                    this.listadoDoctores.get(i).nombre,
-                    this.listadoDoctores.get(i).especialidad
+                   this.listadoDoctores.get(i).ID, 
+                   this.listadoDoctores.get(i).nombre, 
+                   this.listadoDoctores.get(i).especialidad
                 };
+                
                 modeloDoctor.addRow(registroDoctores);
-            }
+           }   
         }
+        
+        if(modeloDoctor.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún doctor", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Este doctor tiene " + listadoDoctores.get(Integer.parseInt(busquedaDoctor)).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        txtBuscarDoctor.setText("");
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
 
     private void btnAñadirDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirDoctorActionPerformed
@@ -322,8 +340,6 @@ public class frmAdministrar extends javax.swing.JFrame {
             };
             modeloDoctor.addRow(registroDoctores);
         }
-        
-        txtBuscarDoctor.setText("");
     }//GEN-LAST:event_btnRecargarActionPerformed
 
     /**
@@ -371,6 +387,7 @@ public class frmAdministrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

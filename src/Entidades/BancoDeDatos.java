@@ -16,14 +16,16 @@ public class BancoDeDatos {
     public ArrayList<String> listaPadecimientos;    
     public ArrayList<String> listaEspecialidades;  
     public ArrayList<String> listaEstado;
+    public ArrayList<String> listaFechas;
     
     public BancoDeDatos(){
         listaNombres = new ArrayList<>();
         listaPadecimientos = new ArrayList<>();
         listaEspecialidades = new ArrayList<>();  
         listaEstado = new ArrayList();
+        listaFechas = new ArrayList<>();
            
-        listaNombres.add("");
+        listaNombres.add("Juan Carlos Pereira Martinez");
         listaNombres.add("Juan Carlos Martinez Lopez");
         listaNombres.add("Valentina Fernanda Perez Ramirez");
         listaNombres.add("Pedro Luis Sanchez Garcia");
@@ -107,10 +109,34 @@ public class BancoDeDatos {
         listaEspecialidades.add("Gastroenterología");
         listaEspecialidades.add("Medicina Interna");
         
+        listaFechas.add("12/02/2024");
+        listaFechas.add("13/02/2024");
+        listaFechas.add("14/02/2024");
+        listaFechas.add("15/02/2024");
+        listaFechas.add("16/02/2024");
+        listaFechas.add("17/02/2024");
+        listaFechas.add("18/02/2024");
+        listaFechas.add("19/02/2024");
+        listaFechas.add("20/02/2024");
+        listaFechas.add("21/02/2024");
+        listaFechas.add("22/02/2024");
+        listaFechas.add("23/02/2024");
+        listaFechas.add("24/02/2024");
+        listaFechas.add("25/02/2024");
+        listaFechas.add("26/02/2024");
+        listaFechas.add("27/02/2024");
+        listaFechas.add("28/02/2024");
+        listaFechas.add("29/02/2024");
+        listaFechas.add("01/03/2024");
+        listaFechas.add("02/03/2024");
+        listaFechas.add("03/03/2024");
+        listaFechas.add("04/03/2024");
+        listaFechas.add("05/03/2024");
+        listaFechas.add("06/03/2024");
+        
         listaEstado.add("Leve");
         listaEstado.add("Moderado");
         listaEstado.add("Grave");
-        
     }
     
     public String Seleccionar(int n){
@@ -131,17 +157,11 @@ public class BancoDeDatos {
             case 3:
                 num = (int)(Math.random()*3);
                 return listaEstado.get(num);
+            case 4:
+                num = (int)(Math.random()*12);
+                return listaFechas.get(num);
             default:
                 return null;      
         }  
     }
-     
-    //public String SeleccionarNombre(){
-    //    int num;
-    //    
-    //    num = (int) Math.round(Math.random()*25);
-    //    
-    //    return listaNombres.get(num);
-    //}
-    
 }
