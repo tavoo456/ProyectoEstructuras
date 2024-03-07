@@ -5,6 +5,7 @@
 package Formularios;
 
 import Entidades.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,19 +20,23 @@ public class frmAdministrar extends javax.swing.JFrame {
      * Creates new form frmAdministrar
      */
     
-    ArrayList<Doctor> listadoDoctores;
+    GestorDoctores doctores;
     DefaultTableModel modeloDoctor;
     DefaultTableModel modeloPaciente;
     DefaultTableModel modeloPacienteVacio;
+    SimpleDateFormat formatoFecha;
     
-    public frmAdministrar() {
+    public frmAdministrar(GestorDoctores doctores) {
         initComponents();
         
-        listadoDoctores = new ArrayList<>();
+        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        this.doctores = doctores;
         modeloDoctor = (DefaultTableModel) this.jtDoctor.getModel();
         modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel(); 
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        CargarTablas();
     }
 
     /**
@@ -130,6 +135,11 @@ public class frmAdministrar extends javax.swing.JFrame {
                 "ID", "Nombre", "Especialidad"
             }
         ));
+        jtDoctor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtDoctorMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jtDoctor);
 
         jtPaciente.setModel(new javax.swing.table.DefaultTableModel(
@@ -174,6 +184,19 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addComponent(btnAñadirDoctor))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarDoctor))
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRecargar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -195,28 +218,15 @@ public class frmAdministrar extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAñadirPaciente)
-                                    .addComponent(jFormattedTextField1)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarDoctor))
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRecargar)))
-                .addGap(47, 47, 47)
+                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12))
-                        .addGap(0, 678, Short.MAX_VALUE))
+                        .addGap(0, 687, Short.MAX_VALUE))
                     .addComponent(jScrollPane3))
                 .addContainerGap())
         );
@@ -251,10 +261,15 @@ public class frmAdministrar extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRecargar)
                             .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -277,12 +292,7 @@ public class frmAdministrar extends javax.swing.JFrame {
                             .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAñadirPaciente)
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14))))
+                        .addGap(19, 19, 19))))
         );
 
         pack();
@@ -293,14 +303,14 @@ public class frmAdministrar extends javax.swing.JFrame {
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
         
-        String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
+        String busquedaDoctor = this.txtBuscarDoctor.getText();
         
-        for (int i = 0; i < this.listadoDoctores.size(); i++){
-            if(busquedaDoctor.equals(listadoDoctores.get(i).ID.toUpperCase())){
+        for (int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
+            if(busquedaDoctor.equals(doctores.obtenerListaDoctores().get(i).ID)){
                 String[] registroDoctores = {
-                   this.listadoDoctores.get(i).ID, 
-                   this.listadoDoctores.get(i).nombre, 
-                   this.listadoDoctores.get(i).especialidad
+                   this.doctores.obtenerListaDoctores().get(i).ID, 
+                   this.doctores.obtenerListaDoctores().get(i).nombre, 
+                   this.doctores.obtenerListaDoctores().get(i).especialidad
                 };
                 
                 modeloDoctor.addRow(registroDoctores);
@@ -311,7 +321,7 @@ public class frmAdministrar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún doctor", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Este doctor tiene " + listadoDoctores.get(Integer.parseInt(busquedaDoctor)).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
         
         txtBuscarDoctor.setText("");
@@ -321,27 +331,55 @@ public class frmAdministrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombreDoctor = this.txtNombreDoctor.getText();
         String especialidadDoctor = this.txtEspecialidad.getText();
-        String id = Integer.toString(listadoDoctores.size());
+        String ID = Integer.toString(doctores.obtenerListaDoctores().size() + 1);
         
-        this.listadoDoctores.add(new Doctor(id,nombreDoctor,especialidadDoctor));
+        this.doctores.agregarDoctores(ID, nombreDoctor, especialidadDoctor);
+        
+        CargarTablas();
     }//GEN-LAST:event_btnAñadirDoctorActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
         // TODO add your handling code here:
+        CargarTablas();        
+    }//GEN-LAST:event_btnRecargarActionPerformed
+
+    private void jtDoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDoctorMouseClicked
+        // TODO add your handling code here:
+        int indiceFila = this.jtDoctor.getSelectedRow();
+        String ID = jtDoctor.getValueAt(indiceFila, 0).toString();
+        int indiceDoctor = Integer.parseInt(ID) - 1;
+        int cantidadPacientes = this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.size();
+        
+        modeloPaciente.getDataVector().removeAllElements();
+        
+        for(int i = 0; i < cantidadPacientes; i++){
+            String [] registroPacientes = {
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).nombre,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).padecimiento,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).estado,
+                formatoFecha.format(doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).fechaIngreso)
+            };
+            
+            modeloPaciente.addRow(registroPacientes);
+        }   
+    }//GEN-LAST:event_jtDoctorMouseClicked
+
+    private void CargarTablas(){
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
         
-        for(int i=0; i<this.listadoDoctores.size(); i++)
+        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
         {
             String[] registroDoctores = {
-                this.listadoDoctores.get(i).ID, 
-                this.listadoDoctores.get(i).nombre, 
-                this.listadoDoctores.get(i).especialidad
+                this.doctores.obtenerListaDoctores().get(i).ID, 
+                this.doctores.obtenerListaDoctores().get(i).nombre, 
+                this.doctores.obtenerListaDoctores().get(i).especialidad
             };
             modeloDoctor.addRow(registroDoctores);
         }
-    }//GEN-LAST:event_btnRecargarActionPerformed
-
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -369,10 +407,11 @@ public class frmAdministrar extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        GestorDoctores doctores = new GestorDoctores();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmAdministrar().setVisible(true);
+                new frmAdministrar(doctores).setVisible(true);
             }
         });
     }

@@ -20,18 +20,18 @@ public class frmHospital extends javax.swing.JFrame {
      * Creates new form frmHospital
      */
     
-    BancoDeDatos datos = new BancoDeDatos();
-            
-    ArrayList<Doctor> listadoDoctores;
+    BancoDeDatos datos;            
+    GestorDoctores doctores;
     DefaultTableModel modeloDoctor;
     DefaultTableModel modeloPaciente;
-    DefaultTableModel modeloPacienteVacio;
-    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat formatoFecha;
     
-    public frmHospital() {
+    public frmHospital(GestorDoctores doctores) {
         initComponents();
-        
-        listadoDoctores = new ArrayList<>();
+
+        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+        datos = new BancoDeDatos();
+        this.doctores = doctores;
         modeloDoctor = (DefaultTableModel) this.jtDoctor.getModel();
         modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel(); 
         
@@ -311,12 +311,12 @@ public class frmHospital extends javax.swing.JFrame {
         
         String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
         
-        for (int i = 0; i < this.listadoDoctores.size(); i++){
-            if(busquedaDoctor.equals(listadoDoctores.get(i).ID.toUpperCase())){
+        for (int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
+            if(busquedaDoctor.equals(doctores.obtenerListaDoctores().get(i).ID.toUpperCase())){
                 String[] registroDoctores = {
-                   this.listadoDoctores.get(i).ID, 
-                   this.listadoDoctores.get(i).nombre, 
-                   this.listadoDoctores.get(i).especialidad
+                   this.doctores.obtenerListaDoctores().get(i).ID, 
+                   this.doctores.obtenerListaDoctores().get(i).nombre, 
+                   this.doctores.obtenerListaDoctores().get(i).especialidad
                 };
                 
                 modeloDoctor.addRow(registroDoctores);
@@ -327,7 +327,7 @@ public class frmHospital extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún doctor", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Este doctor tiene " + listadoDoctores.get(Integer.parseInt(busquedaDoctor)).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
         }
         
         txtBuscarDoctor.setText("");
@@ -338,9 +338,9 @@ public class frmHospital extends javax.swing.JFrame {
         int contadorPacientes = 0;
         String opcionSeleccionada = this.cbEstado.getSelectedItem().toString();
         
-        for(int i = 0; i < this.listadoDoctores.size(); i++){
-            for(int j = 0; j < this.listadoDoctores.get(i).listaPacientes.size(); j++){
-                if(opcionSeleccionada.equals(this.listadoDoctores.get(i).listaPacientes.get(j).estado)){
+        for(int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
+            for(int j = 0; j < this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
+                if(opcionSeleccionada.equals(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado)){
                     contadorPacientes++;
                 }
             }
@@ -357,11 +357,11 @@ public class frmHospital extends javax.swing.JFrame {
         
         for(int i=0; i<cantidadDoctores; i++)
         {
-            this.listadoDoctores.add(new Doctor(Integer.toString(i+1),datos.Seleccionar(0),datos.Seleccionar(2)));
+            this.doctores.agregarDoctores(Integer.toString(i+1), datos.Seleccionar(0), datos.Seleccionar(2));
             for(int j=0; j<cantidadPacientes; j++)
             {
                 try {
-                    this.listadoDoctores.get(i).listaPacientes.add(
+                    this.doctores.obtenerListaDoctores().get(i).listaPacientes.add(
                             new Paciente(
                                     Integer.toString(IDpacientes), datos.Seleccionar(0),
                                     datos.Seleccionar(1), datos.Seleccionar(3),
@@ -377,9 +377,9 @@ public class frmHospital extends javax.swing.JFrame {
             }
             
             String[] registroDoctores = {
-                this.listadoDoctores.get(i).ID, 
-                this.listadoDoctores.get(i).nombre, 
-                this.listadoDoctores.get(i).especialidad
+                this.doctores.obtenerListaDoctores().get(i).ID, 
+                this.doctores.obtenerListaDoctores().get(i).nombre, 
+                this.doctores.obtenerListaDoctores().get(i).especialidad
             };
             
             modeloDoctor.addRow(registroDoctores);
@@ -403,22 +403,21 @@ public class frmHospital extends javax.swing.JFrame {
         int indiceFila = this.jtDoctor.getSelectedRow();
         String ID = jtDoctor.getValueAt(indiceFila, 0).toString();
         int indiceDoctor = Integer.parseInt(ID) - 1;
-        int cantidadPacientes = this.listadoDoctores.get(indiceDoctor).listaPacientes.size();
+        int cantidadPacientes = this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.size();
         
         modeloPaciente.getDataVector().removeAllElements();
         
         for(int i = 0; i < cantidadPacientes; i++){
             String [] registroPacientes = {
-                listadoDoctores.get(indiceDoctor).listaPacientes.get(i).ID,
-                listadoDoctores.get(indiceDoctor).listaPacientes.get(i).nombre,
-                listadoDoctores.get(indiceDoctor).listaPacientes.get(i).padecimiento,
-                listadoDoctores.get(indiceDoctor).listaPacientes.get(i).estado,
-                formatoFecha.format(listadoDoctores.get(indiceDoctor).listaPacientes.get(i).fechaIngreso)
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).nombre,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).padecimiento,
+                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).estado,
+                formatoFecha.format(doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).fechaIngreso)
             };
             
             modeloPaciente.addRow(registroPacientes);
-        }
-        
+        }        
     }//GEN-LAST:event_jtDoctorMouseClicked
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
@@ -426,12 +425,12 @@ public class frmHospital extends javax.swing.JFrame {
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
         
-        for(int i=0; i<this.listadoDoctores.size(); i++)
+        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
         {
             String[] registroDoctores = {
-                this.listadoDoctores.get(i).ID, 
-                this.listadoDoctores.get(i).nombre, 
-                this.listadoDoctores.get(i).especialidad
+                this.doctores.obtenerListaDoctores().get(i).ID, 
+                this.doctores.obtenerListaDoctores().get(i).nombre, 
+                this.doctores.obtenerListaDoctores().get(i).especialidad
             };
             modeloDoctor.addRow(registroDoctores);
         }
@@ -440,7 +439,7 @@ public class frmHospital extends javax.swing.JFrame {
  
     private void btnAdministrarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdministrarDatosActionPerformed
         // TODO add your handling code here:
-        frmAdministrar formAdministrar = new frmAdministrar();
+        frmAdministrar formAdministrar = new frmAdministrar(doctores);
         formAdministrar.setVisible(true);
     }//GEN-LAST:event_btnAdministrarDatosActionPerformed
 
@@ -478,10 +477,11 @@ public class frmHospital extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        GestorDoctores doctores = new GestorDoctores();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmHospital().setVisible(true);
+                new frmHospital(doctores).setVisible(true);
             }
         });
     }
