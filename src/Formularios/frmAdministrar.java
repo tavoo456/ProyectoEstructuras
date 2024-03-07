@@ -107,6 +107,11 @@ public class frmAdministrar extends javax.swing.JFrame {
         jLabel8.setText("Padecimiento:");
 
         btnAñadirPaciente.setText("Añadir paciente");
+        btnAñadirPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirPacienteActionPerformed(evt);
+            }
+        });
 
         gEstados.add(rdLeve);
         rdLeve.setText("Leve");
@@ -364,6 +369,10 @@ public class frmAdministrar extends javax.swing.JFrame {
             modeloPaciente.addRow(registroPacientes);
         }   
     }//GEN-LAST:event_jtDoctorMouseClicked
+
+    private void btnAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirPacienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAñadirPacienteActionPerformed
 
     private void CargarTablas(){
         this.modeloDoctor.getDataVector().removeAllElements();

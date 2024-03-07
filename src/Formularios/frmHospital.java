@@ -445,7 +445,7 @@ public class frmHospital extends javax.swing.JFrame {
 
     private void btnDetallesPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesPacientesActionPerformed
         // TODO add your handling code here:
-        frmDetalles formDetalles = new frmDetalles();
+        frmDetalles formDetalles = new frmDetalles(doctores);
         formDetalles.setVisible(true);
     }//GEN-LAST:event_btnDetallesPacientesActionPerformed
 

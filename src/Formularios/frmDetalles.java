@@ -4,7 +4,12 @@
  */
 package Formularios;
 
+import Entidades.*;
+import java.io.File;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -19,15 +24,19 @@ public class frmDetalles extends javax.swing.JFrame {
     
     DefaultTableModel modeloDetallesPacientes;
     ArrayList<String> listaGlobalDetalles;
+    GestorDoctores doctores;
+    SimpleDateFormat formatoFecha;
     
-    
-    public frmDetalles() {
+    public frmDetalles(GestorDoctores doctores) {
         initComponents();
         
         listaGlobalDetalles = new ArrayList<>();
+        this.doctores = doctores;
         modeloDetallesPacientes = (DefaultTableModel) this.jtListaGlobalDetalle.getModel();
+        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        CargarTablas();
     }
 
     /**
@@ -267,10 +276,108 @@ public class frmDetalles extends javax.swing.JFrame {
 
     private void btnExportarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarHTMLActionPerformed
         // TODO add your handling code here:
+        PrintWriter pw = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        File selectedFile=null;
+        if (result == JFileChooser.APPROVE_OPTION) 
+        {
+            selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath());
+        }
+        try 
+        {
+            pw = new PrintWriter(new File(selectedFile.getAbsolutePath()));
+            // ARMAR EL ARCHIVO HTML....
+            StringBuilder strLinea = new StringBuilder();
+            strLinea.append("<html><head><title>Lista de panchitos</title></head>"
+                    + "<body><h2>Lista de pacientes</h2>"
+                    + "<table border='2'>" +"\n");
+            strLinea.append("<tr><td><b>ID</td><td><b>Nombre</td><td><b>Padecimiento</td><td><b>Estado</td><td><b>Fecha Ingreso</td><td><b>Doctor</td></tr>" +"\n");
+            for(int j=0; j<this.doctores.obtenerListaDoctores().size(); j++)
+            {
+                for(int i=0; i< this.doctores.obtenerListaDoctores().get(j).listaPacientes.size() ; i++)
+                {
+                    strLinea.append("<tr>" +"\n");
+                    // primer atributo
+                    strLinea.append("<td>");
+                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).ID);
+                    strLinea.append("</td>" +"\n");
+                    // segundo atributo
+                    strLinea.append("<td>");
+                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).nombre);
+                    strLinea.append("</td>" +"\n");
+                    // tercer atributo
+                    strLinea.append("<td>");
+                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).padecimiento);
+                    strLinea.append("</td>" +"\n");
+                     // cuarto atributo
+                    strLinea.append("<td>");
+                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).estado);
+                    strLinea.append("</td>" +"\n");
+                    
+                    strLinea.append("<td>");
+                    strLinea.append(formatoFecha.format(doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).fechaIngreso));
+                    strLinea.append("</td>" +"\n");
+                    
+                    strLinea.append("<td>");
+                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).nombre);
+                    strLinea.append("</td>" +"\n");
+
+                    strLinea.append("</tr>" +"\n");
+                }
+            }
+            strLinea.append("</table></body></html>" +"\n");
+            pw.write(strLinea.toString());
+            pw.close();
+        }
+        catch (Exception e) 
+        {
+            //this.jTextArea1.setText("ERROR: "+e.toString());
+        }
     }//GEN-LAST:event_btnExportarHTMLActionPerformed
 
     private void btnExportarCSVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarCSVActionPerformed
         // TODO add your handling code here:
+        PrintWriter pw = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        File selectedFile=null;
+        if (result == JFileChooser.APPROVE_OPTION) 
+        {
+            selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath());
+        }
+        try 
+        {
+            pw = new PrintWriter(new File(selectedFile.getAbsolutePath()));
+        }
+        catch (Exception e) 
+        {
+            //this.jTextArea1.setText("ERROR: "+e.toString());
+        }
+        
+        StringBuilder strLinea = new StringBuilder();
+        String id,nombre,padecimiento,estado,fecha,doctor;
+        
+        strLinea.append("ID" + "," + "Nombre, Padecimiento, Estado, Fecha, Doctor\n");
+        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++){
+            for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
+                id = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID;
+                nombre = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre;
+                padecimiento = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento;
+                estado = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado;
+                fecha = formatoFecha.format(doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso);
+                doctor = this.doctores.obtenerListaDoctores().get(i).nombre;
+                
+                strLinea.append(id + "," + nombre + "," + padecimiento + "," + estado + "," + fecha + "," + doctor + "," + "\n");
+            }
+        }
+        pw.write(strLinea.toString());
+        pw.close();
+        System.out.println("Hecho!");
     }//GEN-LAST:event_btnExportarCSVActionPerformed
 
     private void btnExportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarJSONActionPerformed
@@ -286,6 +393,25 @@ public class frmDetalles extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
 
+    private void CargarTablas(){
+        this.modeloDetallesPacientes.getDataVector().removeAllElements();
+        
+        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
+        {
+            for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
+                String[] registroDoctores = {
+                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID,
+                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre, 
+                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento,
+                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado,
+                formatoFecha.format(doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso),
+                this.doctores.obtenerListaDoctores().get(i).nombre
+            };
+            modeloDetallesPacientes.addRow(registroDoctores);
+            }  
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -313,10 +439,11 @@ public class frmDetalles extends javax.swing.JFrame {
         }
         //</editor-fold>
 
+        GestorDoctores doctores = new GestorDoctores();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDetalles().setVisible(true);
+                new frmDetalles(doctores).setVisible(true);
             }
         });
     }
