@@ -313,7 +313,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         for (int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
             if(busquedaDoctor.equals(doctores.obtenerListaDoctores().get(i).ID)){
                 String[] registroDoctores = {
-                   this.doctores.obtenerListaDoctores().get(i).ID, 
+                   Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                    this.doctores.obtenerListaDoctores().get(i).nombre, 
                    this.doctores.obtenerListaDoctores().get(i).especialidad
                 };
@@ -336,7 +336,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         // TODO add your handling code here:
         String nombreDoctor = this.txtNombreDoctor.getText();
         String especialidadDoctor = this.txtEspecialidad.getText();
-        String ID = Integer.toString(doctores.obtenerListaDoctores().size() + 1);
+        int ID = doctores.obtenerListaDoctores().size() + 1;
         
         this.doctores.agregarDoctores(ID, nombreDoctor, especialidadDoctor);
         
@@ -381,7 +381,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
         {
             String[] registroDoctores = {
-                this.doctores.obtenerListaDoctores().get(i).ID, 
+                Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                 this.doctores.obtenerListaDoctores().get(i).nombre, 
                 this.doctores.obtenerListaDoctores().get(i).especialidad
             };

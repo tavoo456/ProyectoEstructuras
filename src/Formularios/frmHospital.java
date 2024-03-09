@@ -312,9 +312,9 @@ public class frmHospital extends javax.swing.JFrame {
         String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
         
         for (int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
-            if(busquedaDoctor.equals(doctores.obtenerListaDoctores().get(i).ID.toUpperCase())){
+            if(busquedaDoctor.equals(Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID))){
                 String[] registroDoctores = {
-                   this.doctores.obtenerListaDoctores().get(i).ID, 
+                   Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                    this.doctores.obtenerListaDoctores().get(i).nombre, 
                    this.doctores.obtenerListaDoctores().get(i).especialidad
                 };
@@ -357,7 +357,7 @@ public class frmHospital extends javax.swing.JFrame {
         
         for(int i=0; i<cantidadDoctores; i++)
         {
-            this.doctores.agregarDoctores(Integer.toString(i+1), datos.Seleccionar(0), datos.Seleccionar(2));
+            this.doctores.agregarDoctores(i+1, datos.Seleccionar(0), datos.Seleccionar(2));
             for(int j=0; j<cantidadPacientes; j++)
             {
                 try {
@@ -377,7 +377,7 @@ public class frmHospital extends javax.swing.JFrame {
             }
             
             String[] registroDoctores = {
-                this.doctores.obtenerListaDoctores().get(i).ID, 
+                Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                 this.doctores.obtenerListaDoctores().get(i).nombre, 
                 this.doctores.obtenerListaDoctores().get(i).especialidad
             };
@@ -428,7 +428,7 @@ public class frmHospital extends javax.swing.JFrame {
         for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
         {
             String[] registroDoctores = {
-                this.doctores.obtenerListaDoctores().get(i).ID, 
+                Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                 this.doctores.obtenerListaDoctores().get(i).nombre, 
                 this.doctores.obtenerListaDoctores().get(i).especialidad
             };

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * @author Jimmy
  */
 public class Doctor {
-    public String ID;
+    public int ID;
     public String nombre;
     public String especialidad;
     public ArrayList<Paciente> listaPacientes;
@@ -19,7 +19,7 @@ public class Doctor {
         
     }
     
-    public Doctor(String ID, String nombre, String especialidad){
+    public Doctor(int ID, String nombre, String especialidad){
         this.ID = ID;
         this.nombre = nombre;
         this.especialidad = especialidad;

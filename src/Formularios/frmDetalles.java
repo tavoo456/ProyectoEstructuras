@@ -146,6 +146,11 @@ public class frmDetalles extends javax.swing.JFrame {
         });
 
         btnOrdenarID_Sort.setText("Ordenar ID");
+        btnOrdenarID_Sort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarID_SortActionPerformed(evt);
+            }
+        });
 
         btnOrdenarNombre.setText("Ordenar por nombre");
 
@@ -392,6 +397,10 @@ public class frmDetalles extends javax.swing.JFrame {
         //TODO add your handling code here:
         
     }//GEN-LAST:event_btnBuscarDoctorActionPerformed
+
+    private void btnOrdenarID_SortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarID_SortActionPerformed
+        // TODO add your handling code here: 
+    }//GEN-LAST:event_btnOrdenarID_SortActionPerformed
 
     private void CargarTablas(){
         this.modeloDetallesPacientes.getDataVector().removeAllElements();

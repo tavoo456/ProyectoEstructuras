@@ -17,7 +17,7 @@ public class GestorDoctores {
         
     }
     
-    public void agregarDoctores(String ID, String nombre, String especialidad){
+    public void agregarDoctores(int ID, String nombre, String especialidad){
         Doctor doctor = new Doctor(ID, nombre, especialidad);
         listadoDoctores.add(doctor);              
     }
