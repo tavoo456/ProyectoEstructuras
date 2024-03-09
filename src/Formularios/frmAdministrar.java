@@ -5,8 +5,11 @@
 package Formularios;
 
 import Entidades.*;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -68,7 +71,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtPadecimiento = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txtFecha = new javax.swing.JFormattedTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -126,7 +129,7 @@ public class frmAdministrar extends javax.swing.JFrame {
 
         jLabel10.setText("Fecha:");
 
-        jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
 
         jLabel11.setText("Doctores:");
 
@@ -223,7 +226,7 @@ public class frmAdministrar extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAñadirPaciente)
-                                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4)
@@ -294,7 +297,7 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnAñadirPaciente)
                         .addGap(19, 19, 19))))
@@ -308,10 +311,10 @@ public class frmAdministrar extends javax.swing.JFrame {
         this.modeloDoctor.getDataVector().removeAllElements();
         this.modeloPaciente.setRowCount(0);
         
-        String busquedaDoctor = this.txtBuscarDoctor.getText();
+        String busquedaDoctor = this.txtBuscarDoctor.getText().toUpperCase();
         
         for (int i = 0; i < this.doctores.obtenerListaDoctores().size(); i++){
-            if(busquedaDoctor.equals(doctores.obtenerListaDoctores().get(i).ID)){
+            if(busquedaDoctor.equals(Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID))){
                 String[] registroDoctores = {
                    Integer.toString(this.doctores.obtenerListaDoctores().get(i).ID), 
                    this.doctores.obtenerListaDoctores().get(i).nombre, 
@@ -359,7 +362,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         
         for(int i = 0; i < cantidadPacientes; i++){
             String [] registroPacientes = {
-                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID,
+                Integer.toString(doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID),
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).nombre,
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).padecimiento,
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).estado,
@@ -372,6 +375,37 @@ public class frmAdministrar extends javax.swing.JFrame {
 
     private void btnAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirPacienteActionPerformed
         // TODO add your handling code here:
+        int cantPacientes = 0;
+        int indiceFila = this.jtDoctor.getSelectedRow();
+        String ID = jtDoctor.getValueAt(indiceFila, 0).toString();
+        int indiceDoctor = Integer.parseInt(ID) - 1;
+        String estado = "";
+        
+        String nombrePaciente = this.txtNombrePaciente.getText();
+        String padecimiento = this.txtPadecimiento.getText();
+        String fecha = this.txtFecha.getText();
+        
+        if(this.rdGrave.isSelected()){
+            estado = "Grave";
+        }else if(this.rdModerado.isSelected()){
+            estado = "Moderado";
+        }else if(this.rdLeve.isSelected()){
+            estado = "Leve";
+        }else{
+            estado = "no info";
+        }
+        
+        for(int i=0;i<this.doctores.obtenerListaDoctores().size();i++){
+            cantPacientes = cantPacientes + this.doctores.obtenerListaDoctores().get(i).listaPacientes.size();
+        }
+        
+        try {
+            //this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.size();
+
+            this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.add(new Paciente(cantPacientes+1,nombrePaciente,padecimiento,estado,fecha));
+        } catch (ParseException ex) {
+            Logger.getLogger(frmAdministrar.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnAñadirPacienteActionPerformed
 
     private void CargarTablas(){
@@ -431,7 +465,6 @@ public class frmAdministrar extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscarDoctor;
     private javax.swing.JButton btnRecargar;
     private javax.swing.ButtonGroup gEstados;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -452,6 +485,7 @@ public class frmAdministrar extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdModerado;
     private javax.swing.JTextField txtBuscarDoctor;
     private javax.swing.JTextField txtEspecialidad;
+    private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNombreDoctor;
     private javax.swing.JTextField txtNombrePaciente;
     private javax.swing.JTextField txtPadecimiento;

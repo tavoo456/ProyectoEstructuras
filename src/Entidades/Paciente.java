@@ -13,13 +13,13 @@ import java.util.Date;
  * @author Jimmy
  */
 public class Paciente {
-    public String ID;
+    public int ID;
     public String nombre;
     public String padecimiento;
     public String estado;
     public Date fechaIngreso;
 
-    public Paciente(String ID, String nombre, String padecimiento, String estado, String fechaIngreso) throws ParseException{
+    public Paciente(int ID, String nombre, String padecimiento, String estado, String fechaIngreso) throws ParseException{
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         this.fechaIngreso = new Date();
         

@@ -363,7 +363,7 @@ public class frmHospital extends javax.swing.JFrame {
                 try {
                     this.doctores.obtenerListaDoctores().get(i).listaPacientes.add(
                             new Paciente(
-                                    Integer.toString(IDpacientes), datos.Seleccionar(0),
+                                    IDpacientes, datos.Seleccionar(0),
                                     datos.Seleccionar(1), datos.Seleccionar(3),
                                     datos.Seleccionar(4)
                             )
@@ -409,7 +409,7 @@ public class frmHospital extends javax.swing.JFrame {
         
         for(int i = 0; i < cantidadPacientes; i++){
             String [] registroPacientes = {
-                doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID,
+                Integer.toString(doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).ID),
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).nombre,
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).padecimiento,
                 doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.get(i).estado,

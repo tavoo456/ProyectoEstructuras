@@ -365,7 +365,8 @@ public class frmDetalles extends javax.swing.JFrame {
         }
         
         StringBuilder strLinea = new StringBuilder();
-        String id,nombre,padecimiento,estado,fecha,doctor;
+        String nombre,padecimiento,estado,fecha,doctor;
+        int id;
         
         strLinea.append("ID" + "," + "Nombre, Padecimiento, Estado, Fecha, Doctor\n");
         for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++){
@@ -409,7 +410,7 @@ public class frmDetalles extends javax.swing.JFrame {
         {
             for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
                 String[] registroDoctores = {
-                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID,
+                Integer.toString(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID),
                 this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre, 
                 this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento,
                 this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado,
