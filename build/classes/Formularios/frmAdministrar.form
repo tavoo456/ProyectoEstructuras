@@ -163,7 +163,7 @@
                           <Component id="btnRecargar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="57" max="32767" attributes="0"/>
+                      <EmptySpace pref="45" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtNombrePaciente" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -300,7 +300,7 @@
     <Component class="javax.swing.JFormattedTextField" name="txtFecha">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="1" type="1"/>
+          <Format format="dd/MM/yyyy" subtype="-1" type="1"/>
         </Property>
       </Properties>
     </Component>

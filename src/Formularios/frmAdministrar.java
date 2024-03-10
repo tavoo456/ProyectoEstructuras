@@ -5,11 +5,7 @@
 package Formularios;
 
 import Entidades.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,14 +28,14 @@ public class frmAdministrar extends javax.swing.JFrame {
     public frmAdministrar(GestorDoctores doctores) {
         initComponents();
         
-        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         this.doctores = doctores;
+        formatoFecha = new SimpleDateFormat("dd/MM/yyyy");        
         modeloDoctor = (DefaultTableModel) this.jtDoctor.getModel();
-        modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel(); 
+        modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel();         
+                
+        CargarTablas();
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        
-        CargarTablas();
     }
 
     /**
@@ -129,7 +125,7 @@ public class frmAdministrar extends javax.swing.JFrame {
 
         jLabel10.setText("Fecha:");
 
-        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        txtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         jLabel11.setText("Doctores:");
 
@@ -277,7 +273,7 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRecargar)
                             .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,6 +339,8 @@ public class frmAdministrar extends javax.swing.JFrame {
         
         this.doctores.agregarDoctores(ID, nombreDoctor, especialidadDoctor);
         
+        JOptionPane.showMessageDialog(null, "Doctor añadido correctamente", "Datos ingresados", JOptionPane.INFORMATION_MESSAGE);
+        
         CargarTablas();
     }//GEN-LAST:event_btnAñadirDoctorActionPerformed
 
@@ -384,14 +382,17 @@ public class frmAdministrar extends javax.swing.JFrame {
         String nombrePaciente = this.txtNombrePaciente.getText();
         String padecimiento = this.txtPadecimiento.getText();
         String fecha = this.txtFecha.getText();
-        
+       
         if(this.rdGrave.isSelected()){
             estado = "Grave";
-        }else if(this.rdModerado.isSelected()){
+        }
+        else if(this.rdModerado.isSelected()){
             estado = "Moderado";
-        }else if(this.rdLeve.isSelected()){
+        }
+        else if(this.rdLeve.isSelected()){
             estado = "Leve";
-        }else{
+        }
+        else{
             estado = "no info";
         }
         
@@ -400,12 +401,23 @@ public class frmAdministrar extends javax.swing.JFrame {
         }
         
         try {
-            //this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.size();
-
-            this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.add(new Paciente(cantPacientes+1,nombrePaciente,padecimiento,estado,fecha));
-        } catch (ParseException ex) {
-            Logger.getLogger(frmAdministrar.class.getName()).log(Level.SEVERE, null, ex);
+            this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.add(
+                    new Paciente(cantPacientes + 1, nombrePaciente, padecimiento, estado, fecha)
+            );
+            
+            JOptionPane.showMessageDialog(null, "Paciente añadido correctamente", "Datos ingresados", JOptionPane.INFORMATION_MESSAGE);
+            CargarTablas();
+        } 
+        catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+        txtNombrePaciente.setText("");
+        txtPadecimiento.setText("");
+        txtFecha.setText("");
+        rdLeve.setSelected(false);
+        rdModerado.setSelected(false);
+        rdGrave.setSelected(false);
     }//GEN-LAST:event_btnAñadirPacienteActionPerformed
 
     private void CargarTablas(){

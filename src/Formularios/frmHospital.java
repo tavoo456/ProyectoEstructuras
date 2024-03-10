@@ -8,6 +8,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -327,7 +329,7 @@ public class frmHospital extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún doctor", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Cantidad de pacientes", JOptionPane.INFORMATION_MESSAGE);
         }
         
         txtBuscarDoctor.setText("");
@@ -445,7 +447,12 @@ public class frmHospital extends javax.swing.JFrame {
 
     private void btnDetallesPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetallesPacientesActionPerformed
         // TODO add your handling code here:
-        frmDetalles formDetalles = new frmDetalles(doctores);
+        frmDetalles formDetalles = null;
+        try {
+            formDetalles = new frmDetalles(doctores);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "No se pudo acceder a los detalles de los pacientes", "Error", JOptionPane.ERROR_MESSAGE);
+        }
         formDetalles.setVisible(true);
     }//GEN-LAST:event_btnDetallesPacientesActionPerformed
 

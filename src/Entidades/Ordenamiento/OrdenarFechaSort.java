@@ -1,0 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package Entidades.Ordenamiento;
+
+import Entidades.ListaGlobalDetalles;
+import java.util.Comparator;
+
+/**
+ *
+ * @author Jimmy
+ */
+public class OrdenarFechaSort implements Comparator<ListaGlobalDetalles>{
+    @Override
+    public int compare(ListaGlobalDetalles paciente1, ListaGlobalDetalles paciente2) {
+        return paciente1.fechaIngreso.compareTo(paciente2.fechaIngreso);
+    }
+}

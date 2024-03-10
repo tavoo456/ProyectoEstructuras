@@ -5,11 +5,20 @@
 package Formularios;
 
 import Entidades.*;
+import Entidades.ListaGlobalDetalles;
+import Entidades.Ordenamiento.OrdenarFechaSort;
+import Entidades.Ordenamiento.OrdenarIDSort;
+import Entidades.Ordenamiento.OrdenarNombreSort;
 import java.io.File;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -23,20 +32,22 @@ public class frmDetalles extends javax.swing.JFrame {
      */
     
     DefaultTableModel modeloDetallesPacientes;
-    ArrayList<String> listaGlobalDetalles;
     GestorDoctores doctores;
     SimpleDateFormat formatoFecha;
+    ArrayList<ListaGlobalDetalles> listaGlobalDetalles;
     
-    public frmDetalles(GestorDoctores doctores) {
+    public frmDetalles(GestorDoctores doctores) throws ParseException {
         initComponents();
         
-        listaGlobalDetalles = new ArrayList<>();
+        listaGlobalDetalles = new ArrayList<ListaGlobalDetalles>();
         this.doctores = doctores;
         modeloDetallesPacientes = (DefaultTableModel) this.jtListaGlobalDetalle.getModel();
         formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        LlenarLista();
         CargarTablas();
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     /**
@@ -67,9 +78,11 @@ public class frmDetalles extends javax.swing.JFrame {
         btnOrdenarID_Sort = new javax.swing.JButton();
         btnOrdenarNombre = new javax.swing.JButton();
         btnOrdenarFecha = new javax.swing.JButton();
-        btnBuscarDoctor = new javax.swing.JButton();
+        btnBuscarPaciente = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtBuscarPaciente = new javax.swing.JTextField();
+        lblTiempo = new javax.swing.JLabel();
+        btnRecargarTablas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,7 +141,7 @@ public class frmDetalles extends javax.swing.JFrame {
 
         jLabel3.setText("Ordenar por nombre:");
 
-        jLabel4.setText("Ordenar por fechar de ingreso:");
+        jLabel4.setText("Ordenar pacientes por fecha de ingreso:");
 
         jLabel5.setText("Exportar HTML:");
 
@@ -153,123 +166,173 @@ public class frmDetalles extends javax.swing.JFrame {
         });
 
         btnOrdenarNombre.setText("Ordenar por nombre");
+        btnOrdenarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOrdenarNombreActionPerformed(evt);
+            }
+        });
 
         btnOrdenarFecha.setText("Ordenar por fecha");
-
-        btnBuscarDoctor.setText("Buscar");
-        btnBuscarDoctor.addActionListener(new java.awt.event.ActionListener() {
+        btnOrdenarFecha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarDoctorActionPerformed(evt);
+                btnOrdenarFechaActionPerformed(evt);
+            }
+        });
+
+        btnBuscarPaciente.setText("Buscar");
+        btnBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPacienteActionPerformed(evt);
             }
         });
 
         jLabel10.setText("Buscar Paciente por ID:");
+
+        lblTiempo.setText("Ordenado en [cant] ms / [cant] segs");
+
+        btnRecargarTablas.setText("Recargar tablas");
+        btnRecargarTablas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 905, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                        .addContainerGap()
+                        .addComponent(jScrollPane3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(0, 1046, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(211, 211, 211)
+                            .addComponent(btnOrdenarFecha))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addGap(365, 365, 365)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(5, 5, 5)
-                                .addComponent(btnOrdenarFecha)
-                                .addGap(76, 76, 76))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(58, 58, 58)
-                                                .addComponent(jLabel2))
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(btnOrdenarID_Sort)
-                                            .addComponent(btnOrdenarNombre)))
+                                .addGap(88, 88, 88)
+                                .addComponent(jLabel3)
+                                .addGap(10, 10, 10)
+                                .addComponent(btnOrdenarNombre))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
+                                        .addGap(6, 6, 6)
+                                        .addComponent(btnOrdenarID_BD))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnOrdenarID_BD)))
-                                .addGap(63, 63, 63)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportarHTML))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnImportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnExportarCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnOrdenarID_Sort)))))
+                        .addGap(32, 32, 32)
+                        .addComponent(lblTiempo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel6)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnExportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnImportarJSON, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnExportarHTML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnExportarCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(66, 66, 66)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnRecargarTablas, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel10)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarDoctor)))
-                        .addGap(24, 24, 24))))
+                                .addComponent(btnBuscarPaciente)))
+                        .addGap(18, 18, 18))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 192, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(btnExportarHTML)
-                    .addComponent(jLabel5)
-                    .addComponent(btnOrdenarID_BD))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(btnOrdenarID_Sort)
-                            .addComponent(btnExportarCSV)
-                            .addComponent(jLabel8)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel10)
+                            .addComponent(btnExportarHTML)
+                            .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBuscarDoctor)
-                            .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(btnOrdenarNombre)
-                    .addComponent(btnExportarJSON)
-                    .addComponent(jLabel6))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(btnImportarJSON)
-                    .addComponent(jLabel7)
-                    .addComponent(btnOrdenarFecha))
-                .addGap(10, 10, 10))
+                            .addComponent(btnExportarCSV)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnExportarJSON)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnImportarJSON)
+                            .addComponent(jLabel7)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 198, Short.MAX_VALUE)
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnOrdenarID_BD)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(btnOrdenarID_Sort)
+                                            .addComponent(jLabel2))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(8, 8, 8)
+                                                .addComponent(jLabel3))
+                                            .addComponent(btnOrdenarNombre))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblTiempo)
+                                        .addGap(32, 32, 32)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(btnOrdenarFecha)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnBuscarPaciente)
+                                    .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnRecargarTablas, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(33, 33, 33)))))
+                .addContainerGap())
         );
 
         pack();
@@ -300,38 +363,36 @@ public class frmDetalles extends javax.swing.JFrame {
                     + "<body><h2>Lista de pacientes</h2>"
                     + "<table border='2'>" +"\n");
             strLinea.append("<tr><td><b>ID</td><td><b>Nombre</td><td><b>Padecimiento</td><td><b>Estado</td><td><b>Fecha Ingreso</td><td><b>Doctor</td></tr>" +"\n");
-            for(int j=0; j<this.doctores.obtenerListaDoctores().size(); j++)
+            
+            for(int i=0; i<this.listaGlobalDetalles.size(); i++)
             {
-                for(int i=0; i< this.doctores.obtenerListaDoctores().get(j).listaPacientes.size() ; i++)
-                {
-                    strLinea.append("<tr>" +"\n");
-                    // primer atributo
-                    strLinea.append("<td>");
-                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).ID);
-                    strLinea.append("</td>" +"\n");
-                    // segundo atributo
-                    strLinea.append("<td>");
-                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).nombre);
-                    strLinea.append("</td>" +"\n");
-                    // tercer atributo
-                    strLinea.append("<td>");
-                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).padecimiento);
-                    strLinea.append("</td>" +"\n");
-                     // cuarto atributo
-                    strLinea.append("<td>");
-                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).estado);
-                    strLinea.append("</td>" +"\n");
+                strLinea.append("<tr>" +"\n");
+                // primer atributo
+                strLinea.append("<td>");
+                strLinea.append(this.listaGlobalDetalles.get(i).IDPaciente);
+                strLinea.append("</td>" +"\n");
+                // segundo atributo
+                strLinea.append("<td>");
+                strLinea.append(this.listaGlobalDetalles.get(i).nombrePaciente);
+                strLinea.append("</td>" +"\n");
+                // tercer atributo
+                strLinea.append("<td>");
+                strLinea.append(this.listaGlobalDetalles.get(i).padecimiento);
+                strLinea.append("</td>" +"\n");
+                 // cuarto atributo
+                strLinea.append("<td>");
+                strLinea.append(this.listaGlobalDetalles.get(i).estado);
+                strLinea.append("</td>" +"\n");
+                  
+                strLinea.append("<td>");
+                strLinea.append(formatoFecha.format(listaGlobalDetalles.get(i).fechaIngreso));
+                strLinea.append("</td>" +"\n");
                     
-                    strLinea.append("<td>");
-                    strLinea.append(formatoFecha.format(doctores.obtenerListaDoctores().get(j).listaPacientes.get(i).fechaIngreso));
-                    strLinea.append("</td>" +"\n");
+                strLinea.append("<td>");
+                strLinea.append(this.listaGlobalDetalles.get(i).nombreDoctor);
+                strLinea.append("</td>" +"\n");
                     
-                    strLinea.append("<td>");
-                    strLinea.append(this.doctores.obtenerListaDoctores().get(j).nombre);
-                    strLinea.append("</td>" +"\n");
-
-                    strLinea.append("</tr>" +"\n");
-                }
+                strLinea.append("</tr>" +"\n");
             }
             strLinea.append("</table></body></html>" +"\n");
             pw.write(strLinea.toString());
@@ -350,6 +411,7 @@ public class frmDetalles extends javax.swing.JFrame {
         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
         int result = fileChooser.showOpenDialog(this);
         File selectedFile=null;
+        
         if (result == JFileChooser.APPROVE_OPTION) 
         {
             selectedFile = fileChooser.getSelectedFile();
@@ -359,9 +421,9 @@ public class frmDetalles extends javax.swing.JFrame {
         {
             pw = new PrintWriter(new File(selectedFile.getAbsolutePath()));
         }
-        catch (Exception e) 
+        catch (Exception ex) 
         {
-            //this.jTextArea1.setText("ERROR: "+e.toString());
+            JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         
         StringBuilder strLinea = new StringBuilder();
@@ -369,17 +431,15 @@ public class frmDetalles extends javax.swing.JFrame {
         int id;
         
         strLinea.append("ID" + "," + "Nombre, Padecimiento, Estado, Fecha, Doctor\n");
-        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++){
-            for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
-                id = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID;
-                nombre = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre;
-                padecimiento = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento;
-                estado = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado;
-                fecha = formatoFecha.format(doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso);
-                doctor = this.doctores.obtenerListaDoctores().get(i).nombre;
+        for(int i=0; i<this.listaGlobalDetalles.size(); i++){
+            id = this.listaGlobalDetalles.get(i).IDPaciente;
+            nombre = this.listaGlobalDetalles.get(i).nombrePaciente;
+            padecimiento = this.listaGlobalDetalles.get(i).padecimiento;
+            estado = this.listaGlobalDetalles.get(i).estado;
+            fecha = formatoFecha.format(this.listaGlobalDetalles.get(i).fechaIngreso);
+            doctor = this.listaGlobalDetalles.get(i).nombreDoctor;
                 
-                strLinea.append(id + "," + nombre + "," + padecimiento + "," + estado + "," + fecha + "," + doctor + "," + "\n");
-            }
+            strLinea.append(id + "," + nombre + "," + padecimiento + "," + estado + "," + fecha + "," + doctor + "," + "\n");
         }
         pw.write(strLinea.toString());
         pw.close();
@@ -392,35 +452,145 @@ public class frmDetalles extends javax.swing.JFrame {
 
     private void btnOrdenarID_BDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarID_BDActionPerformed
         // TODO add your handling code here:
+        Date dInicio = new Date();
+        int dimension = this.listaGlobalDetalles.size();
+        int dTemp;
+        for(int i = 0; i < dimension - 1; i++)
+        {
+            for(int j = 0; j < dimension - 1; j++)
+            {
+                if (this.listaGlobalDetalles.get(j).IDPaciente > this.listaGlobalDetalles.get(j + 1).IDPaciente)
+                {
+                    dTemp = this.listaGlobalDetalles.get(j + 1).IDPaciente;
+                    this.listaGlobalDetalles.get(j+1).IDPaciente = this.listaGlobalDetalles.get(j).IDPaciente;
+                    this.listaGlobalDetalles.get(j).IDPaciente = dTemp;
+                }
+                if (this.listaGlobalDetalles.get(dimension-1-j).IDPaciente < this.listaGlobalDetalles.get(dimension-2-j).IDPaciente)
+                {
+                    dTemp = this.listaGlobalDetalles.get(dimension-2-j).IDPaciente;
+                    this.listaGlobalDetalles.get(dimension-2-j).IDPaciente = this.listaGlobalDetalles.get(dimension-1-j).IDPaciente;
+                    this.listaGlobalDetalles.get(dimension-1-j).IDPaciente = dTemp;
+                }
+            }
+        }
+        
+        Date dFin = new Date();
+        long duracionOrdenamiento = dFin.getTime()-dInicio.getTime();
+        this.lblTiempo.setText("Ordenado en " + Long.toString(duracionOrdenamiento) +" ms / "+Long.toString(duracionOrdenamiento/1000)+" segs.");
+        CargarTablas();
     }//GEN-LAST:event_btnOrdenarID_BDActionPerformed
 
-    private void btnBuscarDoctorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarDoctorActionPerformed
-        //TODO add your handling code here:
+    private void btnOrdenarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarNombreActionPerformed
+        // TODO add your handling code here:
+        Date dInicio = new Date();
         
-    }//GEN-LAST:event_btnBuscarDoctorActionPerformed
+        OrdenarNombreSort sortNombre = new OrdenarNombreSort();
+        this.listaGlobalDetalles.sort(sortNombre);
+        this.CargarTablas();
+        
+        Date dFin = new Date();
+        long duracionOrdenamiento = dFin.getTime()-dInicio.getTime();
+        this.lblTiempo.setText("Ordenado en " + Long.toString(duracionOrdenamiento) +" ms / "+Long.toString(duracionOrdenamiento/1000)+" segs.");
+    }//GEN-LAST:event_btnOrdenarNombreActionPerformed
+
+    private void btnOrdenarFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarFechaActionPerformed
+        // TODO add your handling code here:
+        Date dInicio = new Date();
+        
+        OrdenarFechaSort sortFecha = new OrdenarFechaSort();
+        this.listaGlobalDetalles.sort(sortFecha);
+        this.CargarTablas();
+        
+        Date dFin = new Date();
+        long duracionOrdenamiento = dFin.getTime()-dInicio.getTime();
+        this.lblTiempo.setText("Ordenado en " + Long.toString(duracionOrdenamiento) +" ms / "+Long.toString(duracionOrdenamiento/1000)+" segs.");
+    }//GEN-LAST:event_btnOrdenarFechaActionPerformed
+
+    private void btnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPacienteActionPerformed
+        // TODO add your handling code here:
+        this.modeloDetallesPacientes.getDataVector().removeAllElements();
+        
+        String busquedaPaciente = this.txtBuscarPaciente.getText().toUpperCase();
+        
+        for (int i = 0; i < this.listaGlobalDetalles.size(); i++){
+            if(busquedaPaciente.equals(Integer.toString(this.listaGlobalDetalles.get(i).IDPaciente))){
+                String[] registroDoctores = {
+                   Integer.toString(this.listaGlobalDetalles.get(i).IDPaciente), 
+                   this.listaGlobalDetalles.get(i).nombrePaciente, 
+                   this.listaGlobalDetalles.get(i).padecimiento,
+                   this.listaGlobalDetalles.get(i).estado,
+                   formatoFecha.format(this.listaGlobalDetalles.get(i).fechaIngreso),
+                   this.listaGlobalDetalles.get(i).nombreDoctor
+                };
+                
+                modeloDetallesPacientes.addRow(registroDoctores);
+           }   
+        }
+        
+        if(modeloDetallesPacientes.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún paciente", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        txtBuscarPaciente.setText("");
+    }//GEN-LAST:event_btnBuscarPacienteActionPerformed
+
+    private void btnRecargarTablasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablasActionPerformed
+        // TODO add your handling code here:
+        CargarTablas();
+    }//GEN-LAST:event_btnRecargarTablasActionPerformed
 
     private void btnOrdenarID_SortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarID_SortActionPerformed
-        // TODO add your handling code here: 
+        // TODO add your handling code here:
+        Date dInicio = new Date();
+        
+        OrdenarIDSort sortID = new OrdenarIDSort();
+        this.listaGlobalDetalles.sort(sortID);
+        this.CargarTablas();
+        
+        Date dFin = new Date();
+        long duracionOrdenamiento = dFin.getTime()-dInicio.getTime();
+        this.lblTiempo.setText("Ordenado en " + Long.toString(duracionOrdenamiento) +" ms / "+Long.toString(duracionOrdenamiento/1000)+" segs.");
     }//GEN-LAST:event_btnOrdenarID_SortActionPerformed
 
     private void CargarTablas(){
         this.modeloDetallesPacientes.getDataVector().removeAllElements();
         
-        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++)
+        for(int i=0; i<this.listaGlobalDetalles.size(); i++)
         {
-            for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
-                String[] registroDoctores = {
-                Integer.toString(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID),
-                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre, 
-                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento,
-                this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado,
-                formatoFecha.format(doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso),
-                this.doctores.obtenerListaDoctores().get(i).nombre
+            String[] registroDoctores = {
+                Integer.toString(this.listaGlobalDetalles.get(i).IDPaciente),
+                this.listaGlobalDetalles.get(i).nombrePaciente, 
+                this.listaGlobalDetalles.get(i).padecimiento,
+                this.listaGlobalDetalles.get(i).estado,
+                formatoFecha.format(this.listaGlobalDetalles.get(i).fechaIngreso),
+                this.listaGlobalDetalles.get(i).nombreDoctor
             };
             modeloDetallesPacientes.addRow(registroDoctores);
-            }  
         }
     }
+    
+     private void LlenarLista() throws ParseException{
+        int cantidadDoctores = doctores.obtenerListaDoctores().size();
+        
+        for(int i = 0; i < cantidadDoctores; i++){
+            int cantidadPacientes = doctores.obtenerListaDoctores().get(i).listaPacientes.size();
+            
+            for(int j = 0; j<cantidadPacientes; j++){
+                listaGlobalDetalles.add(
+                        new ListaGlobalDetalles(
+                            doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID,
+                            doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre,
+                            doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento,
+                            doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado,
+                            formatoFecha.format(doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso),
+                            doctores.obtenerListaDoctores().get(i).nombre
+                        )
+                );
+            }
+        }
+                
+                
+    }           
     
     /**
      * @param args the command line arguments
@@ -453,13 +623,17 @@ public class frmDetalles extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new frmDetalles(doctores).setVisible(true);
+                try {
+                    new frmDetalles(doctores).setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(frmDetalles.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBuscarDoctor;
+    private javax.swing.JButton btnBuscarPaciente;
     private javax.swing.JButton btnExportarCSV;
     private javax.swing.JButton btnExportarHTML;
     private javax.swing.JButton btnExportarJSON;
@@ -468,6 +642,7 @@ public class frmDetalles extends javax.swing.JFrame {
     private javax.swing.JButton btnOrdenarID_BD;
     private javax.swing.JButton btnOrdenarID_Sort;
     private javax.swing.JButton btnOrdenarNombre;
+    private javax.swing.JButton btnRecargarTablas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -480,6 +655,7 @@ public class frmDetalles extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jtListaGlobalDetalle;
+    private javax.swing.JLabel lblTiempo;
     private javax.swing.JTextField txtBuscarPaciente;
     // End of variables declaration//GEN-END:variables
 }
