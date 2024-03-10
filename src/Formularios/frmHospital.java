@@ -40,8 +40,6 @@ public class frmHospital extends javax.swing.JFrame {
         this.btnBuscarDoctor.setEnabled(false);
         this.btnTotalizar.setEnabled(false);
         this.btnRecargar.setEnabled(false);
-        this.btnAdministrarDatos.setEnabled(false);
-        this.btnDetallesPacientes.setEnabled(false);
         
         this.cbEstado.addItem("Leve");
         this.cbEstado.addItem("Moderado");

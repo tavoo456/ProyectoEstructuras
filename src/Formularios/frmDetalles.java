@@ -44,8 +44,21 @@ public class frmDetalles extends javax.swing.JFrame {
         modeloDetallesPacientes = (DefaultTableModel) this.jtListaGlobalDetalle.getModel();
         formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
         
-        LlenarLista();
-        CargarTablas();
+        if(doctores.obtenerListaDoctores().size() == 0){
+            this.btnOrdenarID_BD.setEnabled(false);
+            this.btnOrdenarID_Sort.setEnabled(false);
+            this.btnOrdenarNombre.setEnabled(false);
+            this.btnOrdenarFecha.setEnabled(false);
+            this.btnExportarCSV.setEnabled(false);
+            this.btnExportarHTML.setEnabled(false);
+            this.btnExportarJSON.setEnabled(false);
+            this.btnRecargarTablas.setEnabled(false);
+            this.btnBuscarPaciente.setEnabled(false);
+        }
+        else{
+            LlenarLista();
+            CargarTablas();
+        }
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
@@ -448,6 +461,65 @@ public class frmDetalles extends javax.swing.JFrame {
 
     private void btnExportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarJSONActionPerformed
         // TODO add your handling code here:
+        PrintWriter pw = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(this);
+        File selectedFile=null;
+        
+        if (result == JFileChooser.APPROVE_OPTION) 
+        {
+            selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Archivo seleccionado: " + selectedFile.getAbsolutePath());
+        }
+        try 
+        {
+            pw = new PrintWriter(new File(selectedFile.getAbsolutePath()));
+        }
+        catch (Exception ex) 
+        {
+            JOptionPane.showMessageDialog(null, ex.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        StringBuilder strLinea = new StringBuilder();
+        String nombre,padecimiento,estado,fecha,doctor;
+        int id;
+        
+        strLinea.append("{ \n");
+        strLinea.append("\"listaDoctores\": [ \n");
+        for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++){
+            strLinea.append("{ \n");
+            strLinea.append("\"ID\": \"" + this.doctores.obtenerListaDoctores().get(i).ID + "\" , \n");
+            strLinea.append("\"nombre\": " + "\"" + this.doctores.obtenerListaDoctores().get(i).nombre + "\" , \n");
+            strLinea.append("\"especialidad\": \"" + this.doctores.obtenerListaDoctores().get(i).especialidad + "\", \n");
+            strLinea.append("\"lista Pacientes\": [ \n");
+            for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
+                id = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID;
+                nombre = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre;
+                padecimiento = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).padecimiento;
+                estado = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).estado;
+                fecha = formatoFecha.format(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso);
+                
+                if(j==this.doctores.obtenerListaDoctores().get(i).listaPacientes.size()-1){
+                    strLinea.append("{\"Id\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"padecimiento\": \"" +  padecimiento + "\" ,\"fecha\": \"" + fecha + "\" } \n");
+                }else{
+                    strLinea.append("{\"Id\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"padecimiento\": \"" +  padecimiento + "\" ,\"fecha\": \"" + fecha + "\" }, \n");
+                }
+                
+            }
+            strLinea.append("]");
+            if(i==this.doctores.obtenerListaDoctores().size()-1){
+                strLinea.append("}");
+            }else{
+                strLinea.append("},");
+            }  
+        }
+        strLinea.append("]");
+        strLinea.append("}");
+  
+        pw.write(strLinea.toString());
+        pw.close();
+        System.out.println("Hecho!");
     }//GEN-LAST:event_btnExportarJSONActionPerformed
 
     private void btnOrdenarID_BDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarID_BDActionPerformed

@@ -33,7 +33,9 @@ public class frmAdministrar extends javax.swing.JFrame {
         modeloDoctor = (DefaultTableModel) this.jtDoctor.getModel();
         modeloPaciente = (DefaultTableModel) this.jtPaciente.getModel();         
                 
-        CargarTablas();
+        if(doctores.obtenerListaDoctores().size() != 0){
+            CargarTablas();
+        }
         
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
