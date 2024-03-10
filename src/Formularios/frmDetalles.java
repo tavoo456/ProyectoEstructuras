@@ -11,15 +11,21 @@ import Entidades.Ordenamiento.OrdenarIDSort;
 import Entidades.Ordenamiento.OrdenarNombreSort;
 import java.io.File;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 
 /**
@@ -355,7 +361,14 @@ public class frmDetalles extends javax.swing.JFrame {
 
     private void btnImportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarJSONActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        int result = fileChooser.showOpenDialog(null); // null o tu componente padre
         
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File archivo = fileChooser.getSelectedFile();
+            leerArchivoJSON(archivo);       
+        }
     }//GEN-LAST:event_btnImportarJSONActionPerformed
 
     private void btnExportarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarHTMLActionPerformed
@@ -504,9 +517,9 @@ public class frmDetalles extends javax.swing.JFrame {
                 fecha = formatoFecha.format(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso);
                 
                 if(j==this.doctores.obtenerListaDoctores().get(i).listaPacientes.size()-1){
-                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\" ,\"Fecha\": \"" + fecha + "\" } \n");
+                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\", \"Estado\": \"" +  estado +  "\" ,\"Fecha\": \"" + fecha + "\" } \n");
                 }else{
-                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\" ,\"Fecha\": \"" + fecha + "\" }, \n");
+                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\", \"Estado\": \"" +  estado + "\" ,\"Fecha\": \"" + fecha + "\" }, \n");
                 }
                 
             }
@@ -645,7 +658,7 @@ public class frmDetalles extends javax.swing.JFrame {
         }
     }
     
-     private void LlenarLista() throws ParseException{
+    private void LlenarLista() throws ParseException{
         int cantidadDoctores = doctores.obtenerListaDoctores().size();
         
         for(int i = 0; i < cantidadDoctores; i++){
@@ -663,10 +676,45 @@ public class frmDetalles extends javax.swing.JFrame {
                         )
                 );
             }
+        }         
+    }          
+     
+    public void leerArchivoJSON(File archivo) {
+        try {
+            // Lee el archivo a un String
+            String contenido = new String(Files.readAllBytes(Paths.get(archivo.getPath())), "UTF-8");
+
+            // Crea un JSONObject a partir del contenido del archivo
+            JSONObject obj = new JSONObject(contenido);
+        
+            // Obtiene el JSONArray "ListaDeUsuarios" del objeto JSON
+            JSONArray doctoresJ = obj.getJSONArray("listaDoctores");
+        
+            for (int i = 0; i < doctoresJ.length(); i++) {
+                JSONObject doctoresJSON = doctoresJ.getJSONObject(i);
+                Doctor currentUser = new Doctor(Integer.parseInt(doctoresJSON.getString("ID")), doctoresJSON.getString("Nombre"), doctoresJSON.getString("Especialidad"));
+                
+                JSONArray pacientes = doctoresJSON.getJSONArray("Lista Pacientes");
+                
+                for (int j = 0; j < pacientes.length(); j++) {
+                    JSONObject pacientesJSON = pacientes.getJSONObject(j);
+                    ArrayList<Paciente> listapacientes = new ArrayList();
+                    SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                    
+                    Paciente paciente = new Paciente(Integer.parseInt(pacientesJSON.getString("ID")), pacientesJSON.getString("Nombre"), pacientesJSON.getString("Padecimiento"), pacientesJSON.getString("Estado"), pacientesJSON.getString("Fecha"));
+                    listapacientes.add(paciente);
+                    
+                    currentUser.listaPacientes.addAll(listapacientes);
+                
+                }
+            
+                this.doctores.obtenerListaDoctores().add(currentUser);
+            }        
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-                
-                
-    }           
+    }
+       
     
     /**
      * @param args the command line arguments
