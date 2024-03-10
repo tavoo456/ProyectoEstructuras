@@ -100,6 +100,7 @@
                           <Component id="btnExportarHTML" max="32767" attributes="0"/>
                           <Component id="btnExportarCSV" min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>

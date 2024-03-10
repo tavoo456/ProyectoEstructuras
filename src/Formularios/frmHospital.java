@@ -351,6 +351,7 @@ public class frmHospital extends javax.swing.JFrame {
 
     private void btnCargarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarDatosActionPerformed
         // TODO add your handling code here:
+        
         int cantidadDoctores = Integer.parseInt(txtCantidadDoctores.getText());
         int cantidadPacientes = Integer.parseInt(txtCantidadPacientes.getText());
         int IDpacientes = 1;
@@ -395,7 +396,7 @@ public class frmHospital extends javax.swing.JFrame {
         this.txtCantidadDoctores.setText(null);
         this.txtCantidadDoctores.setEnabled(false);
         this.txtCantidadPacientes.setText(null);
-        this.txtCantidadPacientes.setEnabled(false);       
+        this.txtCantidadPacientes.setEnabled(false);
     }//GEN-LAST:event_btnCargarDatosActionPerformed
 
     private void jtDoctorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtDoctorMouseClicked

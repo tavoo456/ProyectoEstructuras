@@ -21,6 +21,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+
 /**
  *
  * @author Jimmy
@@ -270,7 +271,8 @@ public class frmDetalles extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnExportarHTML, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnExportarCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnExportarCSV, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(2, 2, 2)))
                 .addGap(66, 66, 66)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -353,6 +355,7 @@ public class frmDetalles extends javax.swing.JFrame {
 
     private void btnImportarJSONActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportarJSONActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnImportarJSONActionPerformed
 
     private void btnExportarHTMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarHTMLActionPerformed
@@ -490,9 +493,9 @@ public class frmDetalles extends javax.swing.JFrame {
         for(int i=0; i<this.doctores.obtenerListaDoctores().size(); i++){
             strLinea.append("{ \n");
             strLinea.append("\"ID\": \"" + this.doctores.obtenerListaDoctores().get(i).ID + "\" , \n");
-            strLinea.append("\"nombre\": " + "\"" + this.doctores.obtenerListaDoctores().get(i).nombre + "\" , \n");
-            strLinea.append("\"especialidad\": \"" + this.doctores.obtenerListaDoctores().get(i).especialidad + "\", \n");
-            strLinea.append("\"lista Pacientes\": [ \n");
+            strLinea.append("\"Nombre\": " + "\"" + this.doctores.obtenerListaDoctores().get(i).nombre + "\" , \n");
+            strLinea.append("\"Especialidad\": \"" + this.doctores.obtenerListaDoctores().get(i).especialidad + "\", \n");
+            strLinea.append("\"Lista Pacientes\": [ \n");
             for(int j=0; j<this.doctores.obtenerListaDoctores().get(i).listaPacientes.size(); j++){
                 id = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).ID;
                 nombre = this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).nombre;
@@ -501,9 +504,9 @@ public class frmDetalles extends javax.swing.JFrame {
                 fecha = formatoFecha.format(this.doctores.obtenerListaDoctores().get(i).listaPacientes.get(j).fechaIngreso);
                 
                 if(j==this.doctores.obtenerListaDoctores().get(i).listaPacientes.size()-1){
-                    strLinea.append("{\"Id\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"padecimiento\": \"" +  padecimiento + "\" ,\"fecha\": \"" + fecha + "\" } \n");
+                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\" ,\"Fecha\": \"" + fecha + "\" } \n");
                 }else{
-                    strLinea.append("{\"Id\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"padecimiento\": \"" +  padecimiento + "\" ,\"fecha\": \"" + fecha + "\" }, \n");
+                    strLinea.append("{\"ID\": \"" + id + "\", \"Nombre\": \"" + nombre + "\", \"Padecimiento\": \"" +  padecimiento + "\" ,\"Fecha\": \"" + fecha + "\" }, \n");
                 }
                 
             }
@@ -519,29 +522,30 @@ public class frmDetalles extends javax.swing.JFrame {
   
         pw.write(strLinea.toString());
         pw.close();
-        System.out.println("Hecho!");
     }//GEN-LAST:event_btnExportarJSONActionPerformed
 
     private void btnOrdenarID_BDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrdenarID_BDActionPerformed
         // TODO add your handling code here:
         Date dInicio = new Date();
         int dimension = this.listaGlobalDetalles.size();
-        int dTemp;
+        ListaGlobalDetalles dTemp;
+        
         for(int i = 0; i < dimension - 1; i++)
         {
             for(int j = 0; j < dimension - 1; j++)
             {
                 if (this.listaGlobalDetalles.get(j).IDPaciente > this.listaGlobalDetalles.get(j + 1).IDPaciente)
                 {
-                    dTemp = this.listaGlobalDetalles.get(j + 1).IDPaciente;
-                    this.listaGlobalDetalles.get(j+1).IDPaciente = this.listaGlobalDetalles.get(j).IDPaciente;
-                    this.listaGlobalDetalles.get(j).IDPaciente = dTemp;
-                }
+                    dTemp = this.listaGlobalDetalles.get(j + 1);
+                    this.listaGlobalDetalles.set(j + 1, this.listaGlobalDetalles.get(j));
+                    this.listaGlobalDetalles.set(j, dTemp);                                   
+                }            
+                
                 if (this.listaGlobalDetalles.get(dimension-1-j).IDPaciente < this.listaGlobalDetalles.get(dimension-2-j).IDPaciente)
                 {
-                    dTemp = this.listaGlobalDetalles.get(dimension-2-j).IDPaciente;
-                    this.listaGlobalDetalles.get(dimension-2-j).IDPaciente = this.listaGlobalDetalles.get(dimension-1-j).IDPaciente;
-                    this.listaGlobalDetalles.get(dimension-1-j).IDPaciente = dTemp;
+                    dTemp = this.listaGlobalDetalles.get(dimension-2-j);
+                    this.listaGlobalDetalles.set(dimension-2-j, this.listaGlobalDetalles.get(dimension-1-j));
+                    this.listaGlobalDetalles.set(dimension-1-j, dTemp);
                 }
             }
         }

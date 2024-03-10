@@ -37,6 +37,12 @@ public class frmAdministrar extends javax.swing.JFrame {
             CargarTablas();
         }
         
+        this.btnBuscarPaciente.setEnabled(false);
+        
+        if(doctores.obtenerListaDoctores().size() == 0){
+            btnAñadirPaciente.setEnabled(false);
+        }
+        
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
     }
 
@@ -58,7 +64,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         txtEspecialidad = new javax.swing.JTextField();
         btnBuscarDoctor = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        txtBuscarDoctor = new javax.swing.JTextField();
+        txtBuscarPaciente = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btnAñadirPaciente = new javax.swing.JButton();
@@ -78,6 +84,9 @@ public class frmAdministrar extends javax.swing.JFrame {
         jtPaciente = new javax.swing.JTable();
         btnRecargar = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        txtBuscarDoctor = new javax.swing.JTextField();
+        btnBuscarPaciente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -167,6 +176,15 @@ public class frmAdministrar extends javax.swing.JFrame {
 
         jLabel13.setText("Recargar tablas:");
 
+        jLabel14.setText("Burcar Paciente por ID:");
+
+        btnBuscarPaciente.setText("Buscar");
+        btnBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarPacienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -190,19 +208,6 @@ public class frmAdministrar extends javax.swing.JFrame {
                         .addComponent(btnAñadirDoctor))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscarDoctor))
-                            .addComponent(jLabel6)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel13)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnRecargar))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -224,7 +229,25 @@ public class frmAdministrar extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnAñadirPaciente)
-                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRecargar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarDoctor))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel14)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscarPaciente)))))
                 .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4)
@@ -246,6 +269,11 @@ public class frmAdministrar extends javax.swing.JFrame {
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(txtNombreDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -255,27 +283,28 @@ public class frmAdministrar extends javax.swing.JFrame {
                             .addComponent(txtEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(btnAñadirDoctor)
-                        .addGap(56, 56, 56)
+                        .addGap(18, 18, 18)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscarDoctor)
-                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtBuscarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtBuscarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscarPaciente))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRecargar)
                             .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
                             .addComponent(txtNombrePaciente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -327,7 +356,7 @@ public class frmAdministrar extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún doctor", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else{
-            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Este doctor tiene " + doctores.obtenerListaDoctores().get(Integer.parseInt(busquedaDoctor) - 1).listaPacientes.size() + " pacientes", "Cantidad de pacientes", JOptionPane.INFORMATION_MESSAGE);
         }
         
         txtBuscarDoctor.setText("");
@@ -344,6 +373,7 @@ public class frmAdministrar extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Doctor añadido correctamente", "Datos ingresados", JOptionPane.INFORMATION_MESSAGE);
         
         CargarTablas();
+        this.btnAñadirPaciente.setEnabled(true);
     }//GEN-LAST:event_btnAñadirDoctorActionPerformed
 
     private void btnRecargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarActionPerformed
@@ -370,7 +400,9 @@ public class frmAdministrar extends javax.swing.JFrame {
             };
             
             modeloPaciente.addRow(registroPacientes);
-        }   
+        }
+        
+        this.btnBuscarPaciente.setEnabled(true);
     }//GEN-LAST:event_jtDoctorMouseClicked
 
     private void btnAñadirPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirPacienteActionPerformed
@@ -406,7 +438,6 @@ public class frmAdministrar extends javax.swing.JFrame {
             this.doctores.obtenerListaDoctores().get(indiceDoctor).listaPacientes.add(
                     new Paciente(cantPacientes + 1, nombrePaciente, padecimiento, estado, fecha)
             );
-            
             JOptionPane.showMessageDialog(null, "Paciente añadido correctamente", "Datos ingresados", JOptionPane.INFORMATION_MESSAGE);
             CargarTablas();
         } 
@@ -421,6 +452,32 @@ public class frmAdministrar extends javax.swing.JFrame {
         rdModerado.setSelected(false);
         rdGrave.setSelected(false);
     }//GEN-LAST:event_btnAñadirPacienteActionPerformed
+
+    private void btnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarPacienteActionPerformed
+        // TODO add your handling code here:
+        int indiceFila = jtDoctor.getSelectedRow();
+        int ID = Integer.parseInt(jtDoctor.getValueAt(indiceFila, 0).toString()) - 1;
+        int cantidadPacientes = doctores.obtenerListaDoctores().get(ID).listaPacientes.size();
+        int busquedaPaciente = Integer.parseInt(txtBuscarPaciente.getText());
+        modeloPaciente.setRowCount(0);        
+        
+        for(int i = 0; i<cantidadPacientes; i++){
+            if(doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).ID == busquedaPaciente){
+                String [] registroPaciente = {
+                    Integer.toString(doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).ID),
+                    doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).nombre,
+                    doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).padecimiento,
+                    doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).estado,
+                    formatoFecha.format(doctores.obtenerListaDoctores().get(ID).listaPacientes.get(i).fechaIngreso)                        
+                };
+                modeloPaciente.addRow(registroPaciente);
+            }
+        }
+        
+        if(modeloDoctor.getRowCount() == 0){
+            JOptionPane.showMessageDialog(null, "El ID ingresado no pertenece a ningún paciente", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnBuscarPacienteActionPerformed
 
     private void CargarTablas(){
         this.modeloDoctor.getDataVector().removeAllElements();
@@ -477,12 +534,14 @@ public class frmAdministrar extends javax.swing.JFrame {
     private javax.swing.JButton btnAñadirDoctor;
     private javax.swing.JButton btnAñadirPaciente;
     private javax.swing.JButton btnBuscarDoctor;
+    private javax.swing.JButton btnBuscarPaciente;
     private javax.swing.JButton btnRecargar;
     private javax.swing.ButtonGroup gEstados;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -498,6 +557,7 @@ public class frmAdministrar extends javax.swing.JFrame {
     private javax.swing.JRadioButton rdLeve;
     private javax.swing.JRadioButton rdModerado;
     private javax.swing.JTextField txtBuscarDoctor;
+    private javax.swing.JTextField txtBuscarPaciente;
     private javax.swing.JTextField txtEspecialidad;
     private javax.swing.JFormattedTextField txtFecha;
     private javax.swing.JTextField txtNombreDoctor;
